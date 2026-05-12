@@ -1,3 +1,4 @@
+# used to set how long the login token remains valid
 from datetime import timedelta
 
 from fastapi import Depends, FastAPI, HTTPException
@@ -11,19 +12,19 @@ import motor.motor_asyncio
 
 from auth import ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, get_current_user, get_password_hash, verify_password
 
-# -----------------------------
-# MongoDB Setup
-# -----------------------------
+# connects to a mongodf instance running locally
 client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
+#chooses the database - flashcards_db
 db = client.flashcards_db
+#selects the specific "table"
 sets_collection = db.flashcard_sets
 
-# -----------------------------
-# FastAPI App
-# -----------------------------
+#fastapi
+
+#initialises the web server
 app = FastAPI()
 
-# CORS
+# configures CORS 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -31,28 +32,30 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# -----------------------------
-# Pydantic Models
-# -----------------------------
+#must have a string term and a string definition
 class Term(BaseModel):
     term: str
     definition: str
 
+# flashcards has a title, description and a list of Term objects
 class FlashcardSet(BaseModel):
     title: str
     description: str
     terms: List[Term]
 
-# -----------------------------
-# GET /items
-# -----------------------------
+#get
+
+#defines route to get data
 @app.get("/items")
 async def get_items(
+    #checking valid token is provided
     _: str = Depends(get_current_user)
 ):
     sets_cursor = sets_collection.find({})
+    #converts database into a python list
     sets = await sets_cursor.to_list(None)
 
+    #loops through the database items and converts the MongoDB _id into a string so it can be sent as JSON
     result = []
     for s in sets:
         result.append({
@@ -64,18 +67,18 @@ async def get_items(
 
     return result
 
-# -----------------------------
-# POST /items
-# -----------------------------
+#post 
+
+##defines route to post data
 @app.post("/items")
 async def save_items(
     data: FlashcardSet,
     _: str = Depends(get_current_user)
 ):
-    # Clear all sets (same behavior as your Flask version)
+    # clears database
     await sets_collection.delete_many({})
 
-    # Insert new set
+    # inserts new set
     new_set = {
         "title": data.title,
         "description": data.description,
@@ -89,20 +92,26 @@ async def save_items(
         ]
     }
 
+    #saves the new flashcard set into MongoDB
     await sets_collection.insert_one(new_set)
 
     return {"message": "Flashcard set saved"}
 
-# -----------------------------
-# POST /token
-# -----------------------------
+#post token
+
 @app.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    # TODO: This needs to come from DB
+    # Need to also add a "sign up" flow which persists
+    # user-specified username and password
+
+    #hard-coded username and password
     user = {
         "username": "admin",
         "hashed_password": get_password_hash("admin")
     }
 
+    #checks if the password provided matches the hashed password
     if not user or not verify_password(form_data.password, user["hashed_password"]):
         raise HTTPException(
             status_code=401,
@@ -111,6 +120,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
         )
     
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    # if the password is correct, it generates a JWT 
     access_token = create_access_token(
         data={"sub": form_data.username}, expires_delta=access_token_expires
     )

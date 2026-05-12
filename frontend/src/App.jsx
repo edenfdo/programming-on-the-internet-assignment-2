@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 function App() {
-  // Single source of truth for terms
+  
   const [terms, setTerms] = useState([
     { id: "", term: "", definition: "" }
   ]);
@@ -72,9 +72,7 @@ function App() {
     setPassword("");
   }
 
-  // -----------------------------
-  // Add a new empty term row
-  // -----------------------------
+  //add a new empty term row
   const addTerm = () => {
     setTerms([
       ...terms,
@@ -82,16 +80,12 @@ function App() {
     ]);
   };
 
-  // -----------------------------
-  // Delete a term by index
-  // -----------------------------
+  //delete a term by index
   const deleteTerm = (indexToDelete) => {
     setTerms(terms.filter((_, i) => i !== indexToDelete));
   };
 
-  // -----------------------------
-  // Save flashcard set
-  // -----------------------------
+  //save flashcard set
   const submitForm = () => {
     if (!title.trim() || !description.trim()) {
       setPopupMessage("Please fill in the title and description.");
@@ -114,9 +108,7 @@ function App() {
       .catch((err) => console.error("Error saving set:", err));
   };
 
-  // -----------------------------
-  // Load existing set from backend
-  // -----------------------------
+  // load existing set from backend
   useEffect(() => {
     fetch(
       "http://127.0.0.1:8000/items",
@@ -138,9 +130,7 @@ function App() {
       .catch((err) => console.error("Error getting items", err));
   }, []);
 
-  // -----------------------------
-  // Dark mode sync
-  // -----------------------------
+  //dark mode
   useEffect(() => {
     localStorage.setItem("darkMode", darkMode);
     document.body.classList.toggle("dark", darkMode);
@@ -256,7 +246,22 @@ function App() {
                   className={`delete-term-button ${terms.length > 1 ? "" : "hide"}`}
                   onClick={() => deleteTerm(index)}
                 >
-                  🗑
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-1 14H6L5 6" />
+                    <path d="M10 11v6" />
+                    <path d="M14 11v6" />
+                    <path d="M9 6V4h6v2" />
+                  </svg>
                 </button>
               </div>
             ))}
