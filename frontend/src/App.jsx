@@ -16,6 +16,62 @@ function App() {
     return saved === "true";
   });
 
+  const [loggedIn, setLoggedIn] = useState(
+    !!localStorage.getItem("token")
+  );
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = async () => {
+    const body = new URLSearchParams();
+    body.append("username", email);
+    body.append("password", password);
+
+    const res = await fetch("http://127.0.0.1:8000/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body
+    });
+
+    if (!res.ok) {
+      alert("Invalid login");
+      return;
+    }
+
+    const data = await res.json();
+    localStorage.setItem("token", data.access_token);
+    setLoggedIn(true);
+
+    fetch(
+      "http://127.0.0.1:8000/items",
+      {
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.length > 0) {
+          const firstSet = data[0];
+          setTitle(firstSet.title);
+          setDescription(firstSet.description);
+          setTerms(firstSet.terms);
+        }
+      })
+      .catch((err) => console.error("Error getting items", err));
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+
+    // Reset login form fields
+    setEmail("");
+    setPassword("");
+  }
+
   // -----------------------------
   // Add a new empty term row
   // -----------------------------
@@ -45,13 +101,16 @@ function App() {
 
     const payload = { title, description, terms };
 
-    fetch("http://127.0.0.1:5000/items", {
+    fetch("http://127.0.0.1:8000/items", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+        "Content-Type": "application/json"
+       },
       body: JSON.stringify(payload),
     })
       .then((res) => res.json())
-      .then(() => alert("Set saved successfully!"))
+      .then(() => console.log("Set saved successfully!"))
       .catch((err) => console.error("Error saving set:", err));
   };
 
@@ -59,7 +118,14 @@ function App() {
   // Load existing set from backend
   // -----------------------------
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/items")
+    fetch(
+      "http://127.0.0.1:8000/items",
+      {
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.length > 0) {
@@ -79,6 +145,34 @@ function App() {
     localStorage.setItem("darkMode", darkMode);
     document.body.classList.toggle("dark", darkMode);
   }, [darkMode]);
+
+  if (!loggedIn) {
+    return (
+      <div style={{ maxWidth: 300, margin: "40px auto" }}>
+        <h2>Login</h2>
+
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={{ width: "100%", marginBottom: 10 }}
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={{ width: "100%", marginBottom: 10 }}
+        />
+
+        <button onClick={login} style={{ width: "100%" }}>
+          Login
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className={`wrapper ${darkMode ? "dark" : ""}`}>
@@ -172,6 +266,7 @@ function App() {
           <div className="form-footer">
             <button className="add-term-button" onClick={addTerm}>+</button>
             <button className="done-button" onClick={submitForm}>Save Set</button>
+            <button onClick={logout}>Logout</button>
           </div>
         </div>
       </div>
