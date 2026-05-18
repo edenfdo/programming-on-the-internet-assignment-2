@@ -4,20 +4,31 @@ from datetime import timedelta
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List
 from bson import ObjectId
 
 import motor.motor_asyncio
 
-from auth import ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, get_current_user, get_password_hash, verify_password
+from auth import (
+  ACCESS_TOKEN_EXPIRE_MINUTES, 
+  create_access_token, 
+  get_current_user, 
+  get_password_hash, 
+  verify_password
+)
 
 # connects to a mongodf instance running locally
 client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
+
 #chooses the database - flashcards_db
 db = client.flashcards_db
+
 #selects the specific "table"
 sets_collection = db.flashcard_sets
+
+#collection for user data
+users_collection = db.users
 
 #fastapi
 
@@ -31,6 +42,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+class UserRegister(BaseModel):
+    username: str = Field(..., min_length=3, max_length=50)
+    password: str = Field(..., min_length=4)
 
 #must have a string term and a string definition
 class Term(BaseModel):
@@ -69,6 +85,28 @@ async def get_items(
 
 #post 
 
+#register user
+@app.post("/register")
+async def register_user(user_data: UserRegister):
+    # Check if username already exists in database
+    existing_user = await users_collection.find_one({"username": user_data.username})
+    if existing_user:
+        raise HTTPException(
+            status_code=400,
+            detail="Username already registered"
+        )
+    
+    # Hash password before saving
+    hashed_password = get_password_hash(user_data.password)
+    
+    new_user = {
+        "username": user_data.username,
+        "hashed_password": hashed_password
+    }
+    
+    await users_collection.insert_one(new_user)
+    return {"message": "User registered successfully"}
+
 ##defines route to post data
 @app.post("/items")
 async def save_items(
@@ -76,7 +114,7 @@ async def save_items(
     _: str = Depends(get_current_user)
 ):
     # clears database
-    await sets_collection.delete_many({})
+    #await sets_collection.delete_many({})
 
     # inserts new set
     new_set = {
@@ -106,10 +144,12 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     # user-specified username and password
 
     #hard-coded username and password
-    user = {
-        "username": "admin",
-        "hashed_password": get_password_hash("admin")
-    }
+    # user = {
+    #     "username": "admin",
+    #     "hashed_password": get_password_hash("admin")
+    # }
+    user = await users_collection.find_one({"username": form_data.username})
+
 
     #checks if the password provided matches the hashed password
     if not user or not verify_password(form_data.password, user["hashed_password"]):
