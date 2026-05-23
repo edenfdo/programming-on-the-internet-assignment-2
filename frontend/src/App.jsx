@@ -94,6 +94,11 @@ function App() {
   // Array to hold all saved flashcard sets fetched from MongoDB
   const [savedSets, setSavedSets] = useState([]);
 
+  const [history, setHistory] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(
+    localStorage.getItem("role") === "admin"
+  );
+
   const cleanedTerms = terms.filter(
     t => t.term.trim() && t.definition.trim()
   );
@@ -104,8 +109,7 @@ function App() {
   ? savedSets.flatMap((set) =>
       (set.terms || [])
         .filter((card) =>
-          card.term.toLowerCase().includes(globalSearch.toLowerCase()) ||
-          card.definition.toLowerCase().includes(globalSearch.toLowerCase())
+          card.term.toLowerCase().includes(globalSearch.toLowerCase()) 
         )
         .map((card) => ({
           setId: set.id,
@@ -115,6 +119,29 @@ function App() {
         }))
     )
   : [];
+
+  const loadHistory = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch(
+          "http://127.0.0.1:8000/view_history",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        const data = await res.json();
+
+        setHistory(data);
+
+        setCurrentView("admin");
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
   const login = async () => {
     const body = new URLSearchParams();
@@ -133,8 +160,22 @@ function App() {
     }
 
     const data = await res.json();
-    localStorage.setItem("token", data.access_token);
+
+    localStorage.setItem(
+      "token",
+      data.access_token
+    );
+
+    localStorage.setItem(
+      "role",
+      data.role
+    );
+
     setLoggedIn(true);
+
+    setIsAdmin(
+      data.role === "admin"
+    );
 
     fetchExistingItems();
   };
@@ -167,7 +208,11 @@ function App() {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
+
     setLoggedIn(false);
+    setIsAdmin(false);
+
     setEmail("");
     setPassword("");
   };
@@ -191,6 +236,25 @@ function App() {
   } catch (err) {
     console.error("Error getting items", err);
   }
+};
+
+const recordHistory = async (
+  flashcardSet,
+  action
+) => {
+  const token = localStorage.getItem("token");
+
+  await fetch(
+    `http://127.0.0.1:8000/history?flashcard_set=${encodeURIComponent(
+      flashcardSet
+    )}&action=${encodeURIComponent(action)}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
 };
 
   // const login = async () => {
@@ -282,13 +346,15 @@ function App() {
       body: JSON.stringify(payload),
     })
       .then((res) => res.json())
-      .then(() => {
+      .then(async () => {
         console.log("Set saved successfully!");
-        // Clear input form fields for the next entry
+
+        await recordHistory(title, "created");
+
         setTitle("");
         setDescription("");
         setTerms([{ id: "", term: "", definition: "" }]);
-        // Pull latest updates down from server immediately
+
         fetchExistingItems();
       })
       .catch((err) => console.error("Error saving set:", err));
@@ -399,6 +465,8 @@ function App() {
                       key={index}
                       className="search-result-item"
                       onClick={() => {
+                        recordHistory(result.setTitle, "studied");
+
                         setSelectedStudySetId(result.setId);
                         setCurrentView("study");
                         setGlobalSearch("");
@@ -441,6 +509,16 @@ function App() {
             >
               Manage Cards
             </button>
+            
+            {isAdmin && (
+              <button
+                className="hero-button"
+                onClick={loadHistory}
+              >
+                Admin Dashboard
+              </button>
+            )}
+
           </div>
         </div>
 
@@ -461,6 +539,11 @@ function App() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  login();
+                }
+              }}
             />
 
             {isRegisterMode ? (
@@ -525,7 +608,20 @@ function App() {
           <select
             className="study-dropdown"
             value={selectedStudySetId}
-            onChange={(e) => setSelectedStudySetId(e.target.value)}
+            onChange={(e) => {
+
+              const selectedId = e.target.value;
+
+              setSelectedStudySetId(selectedId);
+
+              const selectedSet = savedSets.find(
+                set => String(set.id) === selectedId
+              );
+
+              if (selectedSet) {
+                recordHistory(selectedSet.title, "studied");
+              }
+            }}
           >
             <option value="">Select a flashcard set</option>
 
@@ -550,6 +646,76 @@ function App() {
       </div>
     );
   }
+
+  if (currentView === "admin") {
+    return (
+      <div className="study-page">
+
+        <div className="study-header">
+
+          <button
+            className="back-button"
+            onClick={() =>
+              setCurrentView("landing")
+            }
+          >
+            ← Back
+          </button>
+
+          <h1>
+            User Learning History
+          </h1>
+
+        </div>
+
+        <div
+          style={{
+            maxWidth: "900px",
+            margin: "0 auto"
+          }}
+        >
+          {history.length === 0 ? (
+            <p>No history found</p>
+          ) : (
+            history.map((item, index) => (
+              <div
+                key={index}
+                style={{
+                  background: "white",
+                  padding: "15px",
+                  marginBottom: "10px",
+                  borderRadius: "8px"
+                }}
+              >
+                
+
+                <div
+                  key={index}
+                  className="history-card"
+                >
+                  <h3>{item.username}</h3>
+                  <p>Set: {item.flashcard_set}</p>
+
+                  <p
+                    className={
+                      item.action === "created"
+                        ? "action-created"
+                        : "action-studied"
+                    }
+                  >
+                    Action: {item.action}
+                  </p>
+                </div>
+
+              </div>
+            ))
+          )}
+        </div>
+
+      </div>
+    );
+  }
+
 
   if (currentView === "manage") {
     return (

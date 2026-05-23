@@ -754,3 +754,45 @@ input, textarea {
 .search-result-item small {
   color: #888;
 }
+.history-card {
+  background: white;
+  border-left: 6px solid var(--main);
+
+  padding: 20px;
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 24px rgba(52, 100, 113, 0.12);
+
+  transition: all 0.25s ease;
+}
+
+.history-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 14px 32px rgba(52, 100, 113, 0.18);
+
+  border-left-color: var(--yellow);
+}
+
+.history-card h3 {
+  margin: 0 0 12px;
+  color: var(--highlight);
+  font-size: 1.25rem;
+}
+
+.history-card p {
+  margin: 6px 0;
+  color: var(--subheading);
+}
+
+.action-created {
+  color: var(--yellow);
+  font-weight: 700;
+}
+
+.action-studied {
+  color: var(--main);
+  font-weight: 700;
+}
