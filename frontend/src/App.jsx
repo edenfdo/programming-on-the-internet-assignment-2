@@ -61,9 +61,7 @@ function CardStack({ title, description, terms }) {
 
 function App() {
   
-  const [terms, setTerms] = useState([
-    { id: "", term: "", definition: "" }
-  ]);
+  const [terms, setTerms] = useState([]);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -93,11 +91,15 @@ function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // NEW STATE: Array to hold all saved flashcard sets fetched from MongoDB
+  // Array to hold all saved flashcard sets fetched from MongoDB
   const [savedSets, setSavedSets] = useState([]);
 
+  const cleanedTerms = terms.filter(
+    t => t.term.trim() && t.definition.trim()
+  );
+
   const [globalSearch, setGlobalSearch] = useState("");
-  
+
   const searchResults = globalSearch.trim()
   ? savedSets.flatMap((set) =>
       (set.terms || [])
@@ -170,23 +172,26 @@ function App() {
     setPassword("");
   };
 
-  const fetchExistingItems = () => {
+  const fetchExistingItems = async () => {
+  try {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    fetch("http://127.0.0.1:8000/items", {
+    const res = await fetch("http://127.0.0.1:8000/items", {
       headers: {
-        "Authorization": "Bearer " + token
+        Authorization: `Bearer ${token}`
       }
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setSavedSets(data); // Store all rows returned from the database
-        }
-      })
-      .catch((err) => console.error("Error getting items", err));
-  };
+    });
+
+    const data = await res.json();
+
+    if (Array.isArray(data)) {
+      setSavedSets(data);
+    }
+  } catch (err) {
+    console.error("Error getting items", err);
+  }
+};
 
   // const login = async () => {
   //   const body = new URLSearchParams();
@@ -239,11 +244,15 @@ function App() {
 
   //add a new empty term row
   const addTerm = () => {
-    setTerms([
-      ...terms,
-      { id: "", term: "", definition: "" }
-    ]);
-  };
+  setTerms((prev) => [
+    ...prev,
+    {
+      id: crypto.randomUUID(),
+      term: "",
+      definition: ""
+    }
+  ]);
+};
 
   //delete a term by index
   const deleteTerm = (indexToDelete) => {
@@ -258,7 +267,11 @@ function App() {
       return;
     }
 
-    const payload = { title, description, terms };
+    const payload = {
+      title,
+      description,
+      terms: cleanedTerms
+    };
 
     fetch("http://127.0.0.1:8000/items", {
       method: "POST",
@@ -461,51 +474,6 @@ function App() {
             )}
           </div>
         )}
-      </div>
-    );
-  }
-
-  if (!loggedIn) {
-    return (
-      <div style={{ maxWidth: 300, margin: "40px auto" }}>
-        <h2>{isRegisterMode ? "Create Account" : "Login"}</h2>
-
-        <input
-          type="text"
-          placeholder="Username / Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{ width: "100%", marginBottom: 10 }}
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ width: "100%", marginBottom: 10 }}
-        />
-
-        {isRegisterMode ? (
-          <button onClick={register} style={{ width: "100%", padding: "8px", marginBottom: 10 }}>
-            Register
-          </button>
-        ) : (
-          <button onClick={login} style={{ width: "100%", padding: "8px", marginBottom: 10 }}>
-            Login
-          </button>
-        )}
-
-        <div style={{ textAlign: "center", marginTop: "10px" }}>
-          <button 
-            onClick={() => setIsRegisterMode(!isRegisterMode)}
-            style={{ background: "none", border: "none", color: "#007bff", cursor: "pointer", textDecoration: "underline" }}
-          >
-            {isRegisterMode ? "Already have an account? Log In" : "Don't have an account? Register"}
-          </button>
-        </div>
-
-
       </div>
     );
   }
