@@ -754,6 +754,13 @@ input, textarea {
 .search-result-item small {
   color: #888;
 }
+
+.history-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
 .history-card {
   background: white;
   border-left: 6px solid var(--main);
