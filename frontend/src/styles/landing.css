@@ -21,12 +21,17 @@
   color: var(--main);
   letter-spacing: 2px;
   margin-bottom: 20px;
+  font-family: "Spline Sans";
+
 }
 
 .landing-subtitle {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin-bottom: 40px;
   opacity: 0.95;
+  color: var(--titletext);
+  font-style: italic;
+  font-family: "Spline Sans";
 }
 
 .landing-buttons {
@@ -35,7 +40,7 @@
   justify-content: center;
 }
 
-.hero-button {
+.managecard-button {
   padding: 16px 34px;
   border: none;
   border-radius: 14px;
@@ -45,29 +50,29 @@
   transition: 0.25s ease;
 }
 
-.hero-button:hover {
+.managecard-button:hover {
   transform: translateY(-3px);
 }
 
-.hero-button.study {
+.managecard-button.study {
    background: var(--yellow);
   color: #222;
   border: none;
 }
 
-.hero-button.study:hover {
+.managecard-button.study:hover {
   background: #f2d57d;
   transform: translateY(-2px);
 }
 
-.hero-button.manage {
- background: var(--main);
+.managecard-button.manage {
+ background: var(--highlight);
   color: white;
   border: none;
 }
 
-.hero-button.manage:hover {
-  background: var(--highlight);
+.managecard-button.manage:hover {
+  background: var(--highlightlighter);
 }
 
 .landing-navbar {
@@ -83,6 +88,7 @@
   border-radius: 12px;
   cursor: pointer;
   backdrop-filter: blur(10px);
+  font-family: "Spline Sans";
   font-weight: 600;
   background: white;
   color: var(--main);
@@ -97,6 +103,7 @@
 .auth-sidebar {
   position: absolute;
   right: 30px;
+  
   top: 90px;
   width: 300px;
   padding: 24px;
@@ -115,17 +122,25 @@
   padding: 12px;
   border-radius: 10px;
   border: 1px solid #ddd;
+  font-family: "Spline Sans";
 }
 
 .auth-sidebar button {
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background: #71a8d8;
+  background: var(--main);
   color: white;
+  font-family: "Spline Sans";
   font-weight: 700;
   cursor: pointer;
 }
+
+.auth-sidebar button:hover {
+  
+  background: var(--highlight);
+}
+  
 
 .login-warning-overlay {
   position: absolute;
@@ -135,8 +150,8 @@
 }
 
 .login-warning-popup {
-  background: white;
-  color: #ff8a00;
+  background: var(--highlight);
+  color: white;
   padding: 18px 24px;
   border-radius: 16px;
   font-weight: 700;
@@ -151,13 +166,14 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 2rem;
-  color: white;
+  color: var(--highlight);
 }
 
 .global-search-container {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  
 }
 
 .global-search-input {
@@ -167,6 +183,7 @@
   border: 2px solid var(--main);
   font-size: 1rem;
   outline: none;
+  font-family: "Spline Sans";
 }
 
 .global-search-input:focus {
@@ -177,20 +194,22 @@
 .search-results {
   width: 420px;
   margin: 10px auto;
-  background: white;
+  padding: 10px 5px;
+  background: var(--white);
   border-radius: 14px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   overflow: hidden;
+  font-family: "Spline Sans";
+  color:black;
 }
 
 .search-result-item {
   padding: 12px 16px;
-  border-bottom: 1px solid #eee;
   cursor: pointer;
 }
 
 .search-result-item:hover {
-  background: rgba(86,159,179,0.08);
+  background: var(--mainlight);
 }
 
 .search-result-item strong {
@@ -201,6 +220,8 @@
   color: #888;
 }
 
+
+
 @keyframes floatIn {
   from {
     opacity: 0;
@@ -210,5 +231,88 @@
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+/* Dark overlay */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+/* White card */
+.popup-box {
+  width: 40%;
+  max-width: 300px;
+
+  background: white;
+  border-radius: 28px;
+
+  padding: 30px 40px;
+
+  text-align: center;
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.15);
+
+  animation: popupFade 0.25s ease;
+}
+
+/* Message */
+.popup-box p {
+  margin: 0 0 40px;
+
+  font-family: "Spline Sans";
+  font-size: 1rem;
+  font-weight: 500;
+
+  line-height: 1.4;
+
+  color: #7a7a7a;
+}
+
+/* OK button */
+.popup-close {
+  background: var(--main);
+
+  color: white;
+
+  border: none;
+  border-radius: 14px;
+
+  padding: 15px 40px;
+
+  font-family: "Spline Sans";
+  font-size: 1rem;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.popup-close:hover {
+  background: var(--highlight);
+  transform: translateY(-2px);
+}
+
+@keyframes popupFade {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

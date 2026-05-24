@@ -1,7 +1,7 @@
 function Navbar({
   loggedIn,
-  // isRegisterMode,
-  setIsRegisterMode,
+  authMode,
+  setAuthMode,
   logout
 }) {
   return (
@@ -10,14 +10,26 @@ function Navbar({
         <>
           <button
             className="nav-button"
-            onClick={() => setIsRegisterMode(false)}
+            onClick={() =>
+              setAuthMode(
+                authMode === "login"
+                  ? null
+                  : "login"
+              )
+            }
           >
             Login
           </button>
 
           <button
             className="nav-button register"
-            onClick={() => setIsRegisterMode(true)}
+            onClick={() =>
+              setAuthMode(
+                authMode === "register"
+                  ? null
+                  : "register"
+              )
+            }
           >
             Register
           </button>

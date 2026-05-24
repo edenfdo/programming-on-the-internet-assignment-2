@@ -5,8 +5,10 @@
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
   --accent: #ffffff; 
+  --mainlight: #c0d5db;
   --main: #569fb3;
   --highlight: #346471;
+  --highlightlighter: #4a7e8d;
   --yellow: #ecc75d;
   --pink: #b35686;
 }
@@ -32,6 +34,10 @@ h1 {
     font-size: 36px;
     margin: 20px 0;
   }
+}
+
+h3{
+  font-family: "Spline Sans";
 }
 
 p {

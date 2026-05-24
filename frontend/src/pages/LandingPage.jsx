@@ -1,11 +1,14 @@
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import "../styles/landing.css";
+import Popup from "../components/Popup";
 
 function LandingPage({
   loggedIn,
-  isRegisterMode,
-  setIsRegisterMode,
+  // isRegisterMode,
+  // setIsRegisterMode,
+  authMode,
+  setAuthMode,
   logout,
   email,
   setEmail,
@@ -16,63 +19,67 @@ function LandingPage({
   globalSearch,
   setGlobalSearch,
   searchResults,
-  showLoginPrompt,
-  setShowLoginPrompt,
+  // showLoginPrompt,
+  // setShowLoginPrompt,
   setCurrentView,
   isAdmin,
   loadHistory,
   recordHistory,
-  setSelectedStudySetId
+  setSelectedStudySetId,
+  showPopup,
+  popupMessage,
+  setPopupMessage,
+  setShowPopup
+
+  
 }) {
-
-  const handleStudyClick = () => {
-    if (!loggedIn) {
-      setShowLoginPrompt(true);
-
-      setTimeout(() => {
-        setShowLoginPrompt(false);
-      }, 2000);
-
-      return;
-    }
-
-    setCurrentView("study");
-  };
 
   const handleManageClick = () => {
     if (!loggedIn) {
-      setShowLoginPrompt(true);
+      setPopupMessage(
+        "Please log in to manage flashcards."
+      );
 
-      setTimeout(() => {
-        setShowLoginPrompt(false);
-      }, 2000);
-
+      setShowPopup(true);
       return;
     }
 
     setCurrentView("manage");
   };
 
+  const handleStudyClick = () => {
+  if (!loggedIn) {
+    setPopupMessage(
+      "Please log in to study flashcards."
+    );
+
+    setShowPopup(true);
+    return;
+  }
+
+  setCurrentView("study");
+};
+
+  
+
   return (
     <div className="landing-page">
+
+      <Popup
+        show={showPopup}
+        message={popupMessage}
+        onClose={() => setShowPopup(false)}
+      />
 
       {/* Navbar */}
       <Navbar
         loggedIn={loggedIn}
-        isRegisterMode={isRegisterMode}
-        setIsRegisterMode={setIsRegisterMode}
+        authMode={authMode}
+        setAuthMode={setAuthMode}
         logout={logout}
       />
 
-      {/* Login Warning */}
-      {showLoginPrompt && (
-        <div className="login-warning-overlay">
-          <div className="login-warning-popup">
-            <p>You need to login first</p>
-            <div className="arrow-right">→</div>
-          </div>
-        </div>
-      )}
+      
 
       {/* Hero */}
       <div className="landing-content">
@@ -116,13 +123,30 @@ function LandingPage({
                       setCurrentView("study");
                     }}
                   >
-                    <strong>{result.term}</strong>
+                    <div
+                      key={index}
+                      className="search-result-item"
+                      onClick={() => {
+                        recordHistory(
+                          result.setTitle,
+                          "studied"
+                        );
 
-                    <p>{result.definition}</p>
+                        setSelectedStudySetId(
+                          String(result.setId)
+                        );
 
-                    <small>
-                      {result.setTitle}
-                    </small>
+                        setCurrentView("study");
+                      }}
+                    >
+                      <div className="search-result-item">
+                        <strong>{result.term}</strong>
+
+                        <div className="search-result-set">
+                          Found in: {result.setTitle}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -133,14 +157,14 @@ function LandingPage({
         <div className="landing-buttons">
 
           <button
-            className="hero-button study"
+            className="managecard-button study"
             onClick={handleStudyClick}
           >
             Study Now
           </button>
 
           <button
-            className="hero-button manage"
+            className="managecard-button manage"
             onClick={handleManageClick}
           >
             Manage Cards
@@ -148,7 +172,7 @@ function LandingPage({
 
           {isAdmin && (
             <button
-              className="hero-button"
+              className="managecard-button"
               onClick={loadHistory}
             >
               Admin Dashboard
@@ -160,11 +184,11 @@ function LandingPage({
       </div>
 
       {/* Login/Register Panel */}
-      {!loggedIn && (
-        <div className="auth-sidebar">
+      {!loggedIn && authMode && (
+      <div className="auth-sidebar">
 
           <h2>
-            {isRegisterMode
+            {authMode === "register"
               ? "Create Account"
               : "Login"}
           </h2>
@@ -187,23 +211,23 @@ function LandingPage({
             }
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                isRegisterMode
-                  ? register()
-                  : login();
+                authMode === "register"
+                ? register()
+                : login();
               }
             }}
           />
 
           <button
             onClick={
-              isRegisterMode
+              authMode === "register"
                 ? register
                 : login
             }
           >
-            {isRegisterMode
-              ? "Register"
-              : "Login"}
+            {authMode === "register"
+            ? "Register"
+            : "Login"}
           </button>
 
         </div>

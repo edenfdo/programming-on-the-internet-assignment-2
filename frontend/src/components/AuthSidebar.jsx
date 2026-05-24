@@ -5,13 +5,13 @@ export default function AuthSidebar({
   setPassword,
   login,
   register,
-  isRegisterMode
+  authMode
 }) {
   return (
     <div className="auth-sidebar">
 
       <h2>
-        {isRegisterMode
+        {authMode === "register"
           ? "Create Account"
           : "Login"}
       </h2>
@@ -31,7 +31,7 @@ export default function AuthSidebar({
         }
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            isRegisterMode
+            authMode === "register"
               ? register()
               : login();
           }
@@ -40,12 +40,12 @@ export default function AuthSidebar({
 
       <button
         onClick={
-          isRegisterMode
+          authMode === "register"
             ? register
             : login
         }
       >
-        {isRegisterMode
+        {authMode === "register"
           ? "Register"
           : "Login"}
       </button>

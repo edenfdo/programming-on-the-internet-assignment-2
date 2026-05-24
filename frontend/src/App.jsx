@@ -93,7 +93,7 @@ function App() {
   const [currentView, setCurrentView] = useState("landing");
 
   const [selectedStudySetId, setSelectedStudySetId] = useState("");
-  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  // const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   // const [searchTerm, setSearchTerm] = useState("");
   
@@ -103,7 +103,9 @@ function App() {
   );
 
 // Tracks whether the user is viewing the Login or Register form
-  const [isRegisterMode, setIsRegisterMode] = useState(false);
+  
+
+  const [authMode, setAuthMode] = useState(null);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -179,7 +181,8 @@ function App() {
 
       fetchExistingItems();
     } catch {
-      alert("Invalid login credentials");
+      setPopupMessage("Incorrect username or password.");
+      setShowPopup(true);
     }
   };
   const loadHistory = async () => {
@@ -265,7 +268,11 @@ function App() {
 
   const register = async () => {
     if (email.length < 3 || password.length < 4) {
-      alert("Username must be ≥ 3 chars, password ≥ 4 chars");
+      setPopupMessage(
+        "Username must be at least 3 characters and password must be at least 4 characters."
+      );
+
+      setShowPopup(true);
       return;
     }
 
@@ -281,12 +288,20 @@ function App() {
     const data = await res.json();
 
     if (!res.ok) {
-      alert(data.detail || "Registration failed");
+      setPopupMessage(
+        data.detail || "Registration failed"
+      );
+      setShowPopup(true);
       return;
     }
 
-    alert("Registration successful! You can now log in.");
-    setIsRegisterMode(false); // Switch back to login view automatically
+    setPopupMessage(
+      "Account created successfully! Please log in."
+    );
+
+    setShowPopup(true);
+
+    setAuthMode("login");
   };
 
   const logout = () => {
@@ -483,8 +498,7 @@ function App() {
   return (
     <LandingPage
       loggedIn={loggedIn}
-      isRegisterMode={isRegisterMode}
-      setIsRegisterMode={setIsRegisterMode}
+      
       logout={logout}
       email={email}
       setEmail={setEmail}
@@ -495,13 +509,19 @@ function App() {
       globalSearch={globalSearch}
       setGlobalSearch={setGlobalSearch}
       searchResults={searchResults}
-      showLoginPrompt={showLoginPrompt}
-      setShowLoginPrompt={setShowLoginPrompt}
+      // showLoginPrompt={showLoginPrompt}
+      // setShowLoginPrompt={setShowLoginPrompt}
       setCurrentView={setCurrentView}
       isAdmin={isAdmin}
       loadHistory={loadHistory}
       recordHistory={recordHistory}
       setSelectedStudySetId={setSelectedStudySetId}
+      showPopup={showPopup}
+      popupMessage={popupMessage}
+      setPopupMessage={setPopupMessage}
+      setShowPopup={setShowPopup}
+      authMode={authMode}
+      setAuthMode={setAuthMode}
     />
   );
 }
