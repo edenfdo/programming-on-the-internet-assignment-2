@@ -21,6 +21,12 @@
   margin-bottom: 40px;
 }
 
+.study-search-input:focus {
+  outline: none;
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 4px rgba(236, 199, 93, 0.2);
+}
+
 .study-dropdown {
   padding: 16px;
   border-radius: 14px;

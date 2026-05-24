@@ -184,6 +184,16 @@ input, textarea {
   backdrop-filter: blur(10px);
   transition: 0.2s ease;
 }
+/* 
+.back-button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+} */
 
 .back-button:hover {
   transform: translateY(-2px);
