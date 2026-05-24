@@ -1,4 +1,5 @@
 import FlashcardForm from "../components/FlashcardForm";
+import "../styles/manage.css";
 
 function ManagePage(props) {
   return (

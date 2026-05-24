@@ -1,5 +1,6 @@
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
+import "../styles/landing.css";
 
 function LandingPage({
   loggedIn,

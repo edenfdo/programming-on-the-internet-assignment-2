@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./index.css";
 
 // import CardStack from "./components/CardStack";
 // import AuthSidebar from "./components/AuthSidebar";

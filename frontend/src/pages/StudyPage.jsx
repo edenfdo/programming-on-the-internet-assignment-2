@@ -1,4 +1,5 @@
 import CardStack from "../components/CardStack";
+import "../styles/study.css";
 
 function StudyPage({
   savedSets,

@@ -1,4 +1,5 @@
 import HistoryCard from "../components/HistoryCard";
+import "../styles/admin.css";
 
 function AdminPage({
   history,
