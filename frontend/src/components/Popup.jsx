@@ -1,6 +1,8 @@
 function Popup({
   show,
+  title,
   message,
+  buttonText,
   onClose
 }) {
   if (!show) return null;
@@ -8,7 +10,7 @@ function Popup({
   return (
     <div className="popup-overlay">
       <div className="popup-box">
-        <h3>Oops!</h3>
+        <h2>{title}</h2>
 
         <p>{message}</p>
 
@@ -16,7 +18,7 @@ function Popup({
           className="popup-close"
           onClick={onClose}
         >
-          Try Again
+          {buttonText}
         </button>
       </div>
     </div>

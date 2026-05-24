@@ -1,25 +1,33 @@
 import { useState } from "react";
 
-function CardStack({ title, description, terms }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [flipped, setFlipped] = useState(false);
+function CardStack({
+  title,
+  description,
+  terms
+}) {
+  const [currentIndex, setCurrentIndex] =
+    useState(0);
 
-  const hasCards = terms && terms.length > 0;
+  const [flipped, setFlipped] =
+    useState(false);
+
+  const hasCards =
+    terms && terms.length > 0;
+
   const currentCard = hasCards
     ? terms[currentIndex]
     : null;
 
-  const nextCard = (e) => {
-    e.stopPropagation();
+  const nextCard = () => {
     setFlipped(false);
 
     setCurrentIndex(
-      (prev) => (prev + 1) % terms.length
+      (prev) =>
+        (prev + 1) % terms.length
     );
   };
 
-  const prevCard = (e) => {
-    e.stopPropagation();
+  const prevCard = () => {
     setFlipped(false);
 
     setCurrentIndex(
@@ -29,71 +37,87 @@ function CardStack({ title, description, terms }) {
     );
   };
 
+  if (!hasCards) {
+    return (
+      <div className="set-card-stack">
+        <h1 className="set-card-title">
+          {title}
+        </h1>
+
+        <p className="set-card-description">
+          {description}
+        </p>
+
+        <p className="empty-set-message">
+          No flashcards available.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="set-card-stack">
-      <h3 className="set-card-title">
+
+      <h1 className="set-card-title">
         {title}
-      </h3>
+      </h1>
 
       <p className="set-card-description">
         {description}
       </p>
 
-      {hasCards ? (
-        <div className="stack-inner-container">
+      <div className="study-card-container">
 
-          <div className="stack-perspective-wrapper">
-            <div className="stack-bg-layer-1"></div>
-            <div className="stack-bg-layer-2"></div>
+        <div
+          className={`study-card ${
+            flipped ? "flipped" : ""
+          }`}
+          onClick={() =>
+            setFlipped(!flipped)
+          }
+        >
+          <span className="study-card-label">
+            {flipped
+              ? "Definition"
+              : "Term"}
+          </span>
 
-            <div
-              className={`main-flashcard ${
-                flipped ? "flipped" : ""
-              }`}
-              onClick={() =>
-                setFlipped(!flipped)
-              }
-            >
-              <span className="card-side-indicator">
-                {flipped
-                  ? "Definition"
-                  : "Term"}
-              </span>
-
-              <strong className="card-text-content">
-                {flipped
-                  ? currentCard.definition
-                  : currentCard.term}
-              </strong>
-            </div>
+          <div className="study-card-content">
+            {flipped
+              ? currentCard.definition
+              : currentCard.term}
           </div>
 
-          <div className="stack-navigation-row">
-            <button
-              className="stack-nav-button"
-              onClick={prevCard}
-            >
-              ← Back
-            </button>
-
-            <span className="stack-counter">
-              {currentIndex + 1} / {terms.length}
-            </span>
-
-            <button
-              className="stack-nav-button"
-              onClick={nextCard}
-            >
-              Next →
-            </button>
-          </div>
-
+          <p className="study-card-hint">
+            Click card to flip
+          </p>
         </div>
-      ) : (
-        <p className="empty-set-message">
-          No matching flashcards found.
-        </p>
-      )}
+
+      </div>
+
+      <div className="stack-navigation-row">
+
+        <button
+          className="stack-nav-button"
+          onClick={prevCard}
+        >
+          ← Previous
+        </button>
+
+        <span className="stack-counter">
+          {currentIndex + 1} /{" "}
+          {terms.length}
+        </span>
+
+        <button
+          className="stack-nav-button"
+          onClick={nextCard}
+        >
+          Next →
+        </button>
+
+      </div>
+
     </div>
   );
 }

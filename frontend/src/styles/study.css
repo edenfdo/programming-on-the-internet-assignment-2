@@ -37,6 +37,8 @@
 
   border: 2px solid var(--main);
   color: var(--highlight);
+  font-family: "Spline Sans";
+
 }
 
 .study-dropdown:focus {
@@ -49,137 +51,177 @@
   justify-content: center;
 }
 
-
-/* --- Interactive Card Stack Layout --- */
 .set-card-stack {
-  background: #f9f9f9;
-  border: 2px solid #333;
-  border-radius: 12px;
-  padding: 25px;
-  margin-bottom: 35px;
-  box-shadow: 6px 6px 0px #333;
-  color: #111;
-  position: relative;
-}
+  max-width: 900px;
+  width: 40%;
+  
+  
 
-.set-card-title {
-  margin: 0 0 5px 0;
-  color: var(--highlight);
-}
-
-.set-card-description {
-  margin: 0 0 20px 0;
-  color: #555;
-  font-size: 14px;
-}
-
-.stack-inner-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
-
-.stack-perspective-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 320px;
-  height: 180px;
-}
-
-/* Background layers simulating paper depth */
-.stack-bg-layer-1 {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  right: -8px;
-  bottom: -8px;
-  background: #ddd;
-  border: 2px solid #333;
-  border-radius: 10px;
-  z-index: 1;
-}
-
-.stack-bg-layer-2 {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  right: -4px;
-  bottom: -4px;
-  background: #eee;
-  border: 2px solid #333;
-  border-radius: 10px;
-  z-index: 2;
-}
-
-/* Top active interactive card */
-.main-flashcard {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  text-align: center;
-  z-index: 3;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  transition: background 0.2s;
+  margin: 0 auto;
 
   background: white;
-  border: 3px solid var(--main);
-  color: var(--highlight);
+
+  border-radius: 24px;
+
+  padding: 2.5rem;
+
+  border: 2px solid var(--border);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.04);
 }
 
-.main-flashcard.flipped {
-  background: #e6f2ff;
-  border-color: var(--yellow);
+.study-card {
+  width: min(650px, 90%);
+  aspect-ratio: 16 / 9;
 
-}
+  background: var(--mainlight);
 
-.card-side-indicator {
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #888;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-}
+  border-radius: 24px;
 
-.card-text-content {
-  font-size: 18px;
-  word-break: break-word;
-}
+  padding: 2rem;
 
-/* Navigation Row */
-.stack-navigation-row {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
-  margin-top: 10px;
+
+  text-align: center;
 }
+
+.study-card.flipped{
+  background: var(--main);
+}
+
+.study-card:hover {
+  transform: translateY(-2px);
+}
+
+.study-card-label {
+  background: white;
+
+  color: var(--highlight);
+
+  padding: 0.6rem 1rem;
+
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  margin-bottom: 2rem;
+  font-family: "Spline Sans";
+}
+
+.study-card-content {
+  
+
+  color: var(--titletext);
+
+  font-size: 2rem;
+
+  font-weight: 500;
+
+  line-height: 1.4;
+  font-family: "Spline Sans";
+}
+
+.study-card-hint {
+  margin-top: 3rem;
+
+  color: var(--subheading);
+  font-family: "Spline Sans";
+}
+
+.study-card:hover {
+  transform: translateY(-2px);
+}
+
+.study-card-label {
+  background: white;
+
+  color: var(--highlight);
+
+  padding: 0.6rem 1rem;
+
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  margin-bottom: 2rem;
+}
+
+.study-card-content {
+  max-width: 700px;
+
+  color: var(--titletext);
+
+  font-size: 2rem;
+
+  font-weight: 500;
+
+  line-height: 1.4;
+}
+
 
 .stack-nav-button {
-  padding: 8px 16px;
-  background: #333;
-  color: #fff;
   border: none;
-  border-radius: 6px;
+
+  background: var(--yellow);
+
+  color: var(--titletext);
+
+  padding: 0.9rem 1.4rem;
+
+  border-radius: 16px;
+
+  font-family: "Spline Sans";
+  font-weight: 600;
+
   cursor: pointer;
-  font-weight: bold;
+
+  transition: 0.2s ease;
+}
+
+.stack-nav-button:hover {
+  transform: translateY(-2px);
+}
+
+.stack-navigation-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 1rem;
+
+  margin-top: 1.5rem;
 }
 
 .stack-counter {
-  font-size: 14px;
+  min-width: 80px;
+
+  text-align: center;
+
+  color: var(--highlight);
+
   font-weight: 600;
-  color: #444;
+  font-family: "Spline Sans";
 }
 
-.empty-set-message {
-  color: #888;
-  font-style: italic;
+.set-card-title {
+  margin: 0;
+
+  font-size: 2.5rem;
+
+  color: var(--titletext);
+}
+
+.set-card-description {
+  margin: 0.75rem 0 2rem;
+
+  color: var(--subheading);
+
+  font-size: 1rem;
+  font-family: "Spline Sans";
 }

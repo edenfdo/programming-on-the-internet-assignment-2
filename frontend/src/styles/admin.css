@@ -1,4 +1,6 @@
 
+
+
 .history-grid {
   display: grid;
   gap: 1rem;
@@ -16,6 +18,7 @@
     0 8px 24px rgba(52, 100, 113, 0.12);
 
   transition: all 0.25s ease;
+  font-family: "Spline Sans";
 }
 
 .history-card:hover {
@@ -30,7 +33,7 @@
 .history-card h3 {
   margin: 0 0 12px;
   color: var(--highlight);
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 
 .history-card p {

@@ -7,6 +7,7 @@ import LandingPage from "./pages/LandingPage";
 import StudyPage from "./pages/StudyPage";
 import ManagePage from "./pages/ManagePage";
 import AdminPage from "./pages/AdminPage";
+import SetsPage from "./pages/SetsPage";
 
 import {
   loginUser,
@@ -83,8 +84,11 @@ function App() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const [showPopup, setShowPopup] = useState(false);
+  const [popupTitle, setPopupTitle] = useState("");
   const [popupMessage, setPopupMessage] = useState("");
+  const [popupButtonText, setPopupButtonText] = useState("Close");
+  const [showPopup, setShowPopup] = useState(false);
+
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem("darkMode");
     return saved === "true";
@@ -123,6 +127,44 @@ function App() {
   );
 
   const [globalSearch, setGlobalSearch] = useState("");
+
+  const [editingSetId, setEditingSetId] =
+    useState(null);
+
+  const startEditingSet = (set) => {
+    setEditingSetId(set.id);
+
+    setTitle(set.title);
+    setDescription(set.description);
+    setTerms(set.terms);
+
+    setCurrentView("manage");
+  };
+
+  const deleteSet = async (id, title) => {
+    try {
+      await fetch(
+        `http://127.0.0.1:8000/items/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization:
+              "Bearer " +
+              localStorage.getItem("token"),
+          },
+        }
+      );
+
+      await recordHistory(
+        title,
+        "deleted"
+      );
+
+      fetchExistingItems();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const searchResults = globalSearch.trim()
   ? savedSets.flatMap((set) =>
@@ -181,15 +223,16 @@ function App() {
 
       fetchExistingItems();
     } catch {
-      setPopupMessage("Incorrect username or password.");
+      setPopupTitle("Oops!");
+      setPopupMessage("Invalid username or password.");
+      setPopupButtonText("Try Again");
       setShowPopup(true);
     }
   };
   const loadHistory = async () => {
     try {
-      const token = localStorage.getItem("token");
 
-      const data = await getHistory(token);
+      const data = await getHistory();
 
       setHistory(data);
       setCurrentView("admin");
@@ -200,9 +243,8 @@ function App() {
   
   const fetchExistingItems = async () => {
     try {
-      const token = localStorage.getItem("token");
 
-      const data = await getItems(token);
+      const data = await getItems();
 
       if (Array.isArray(data)) {
         setSavedSets(data);
@@ -217,10 +259,7 @@ function App() {
     action
   ) => {
     try {
-      const token = localStorage.getItem("token");
-
       await saveHistory(
-        token,
         flashcardSet,
         action
       );
@@ -288,6 +327,7 @@ function App() {
     const data = await res.json();
 
     if (!res.ok) {
+      setPopupTitle("Oops!");
       setPopupMessage(
         data.detail || "Registration failed"
       );
@@ -295,10 +335,11 @@ function App() {
       return;
     }
 
+    setPopupTitle("Yay!");
     setPopupMessage(
       "Account created successfully! Please log in."
     );
-
+    setPopupButtonText("Login");
     setShowPopup(true);
 
     setAuthMode("login");
@@ -424,7 +465,11 @@ function App() {
   //save flashcard set
   const submitForm = () => {
     if (!title.trim() || !description.trim()) {
-      setPopupMessage("Please fill in the title and description.");
+      setPopupTitle("Oops!");
+      setPopupMessage(
+        "Please fill in the title and description."
+      );
+      setPopupButtonText("Got It");
       setShowPopup(true);
       return;
     }
@@ -435,27 +480,69 @@ function App() {
       terms: cleanedTerms
     };
 
-    fetch("http://127.0.0.1:8000/items", {
-      method: "POST",
-      headers: { 
-        "Authorization": "Bearer " + localStorage.getItem("token"),
-        "Content-Type": "application/json"
-       },
+    const url = editingSetId
+      ? `http://127.0.0.1:8000/items/${editingSetId}`
+      : "http://127.0.0.1:8000/items";
+
+    const method = editingSetId
+      ? "PUT"
+      : "POST";
+
+    fetch(url, {
+      method,
+      headers: {
+        Authorization:
+          "Bearer " +
+          localStorage.getItem("token"),
+        "Content-Type":
+          "application/json",
+      },
       body: JSON.stringify(payload),
     })
       .then((res) => res.json())
       .then(async () => {
-        console.log("Set saved successfully!");
+        console.log(
+          editingSetId
+            ? "Set updated!"
+            : "Set created!"
+        );
 
-        await recordHistory(title, "created");
+        await recordHistory(
+          title,
+          editingSetId
+            ? "updated"
+            : "created"
+        );
+
+        setPopupTitle("Success!");
+        setPopupMessage(
+          editingSetId
+            ? "Flashcard set updated."
+            : "Flashcard set created."
+        );
+        setPopupButtonText("OK");
+        setShowPopup(true);
+        setEditingSetId(null);
 
         setTitle("");
         setDescription("");
-        setTerms([{ id: "", term: "", definition: "" }]);
+        setTerms([
+          {
+            id: "",
+            term: "",
+            definition: ""
+          }
+        ]);
 
         fetchExistingItems();
+        //setCurrentView("mysets");
       })
-      .catch((err) => console.error("Error saving set:", err));
+      .catch((err) =>
+        console.error(
+          "Error saving set:",
+          err
+        )
+      );
   };
 
   // load existing set from backend
@@ -517,11 +604,16 @@ function App() {
       recordHistory={recordHistory}
       setSelectedStudySetId={setSelectedStudySetId}
       showPopup={showPopup}
+      popupTitle={popupTitle}
       popupMessage={popupMessage}
       setPopupMessage={setPopupMessage}
+      popupButtonText={popupButtonText}
+      setPopupTitle={setPopupTitle}
+      setPopupButtonText={setPopupButtonText} 
       setShowPopup={setShowPopup}
       authMode={authMode}
       setAuthMode={setAuthMode}
+      savedSets={savedSets}
     />
   );
 }
@@ -546,6 +638,21 @@ function App() {
       />
     );
   }
+
+  if (currentView === "mysets") {
+    return(
+      <SetsPage
+        savedSets={savedSets}
+        setCurrentView={setCurrentView}
+        setSelectedStudySetId={
+          setSelectedStudySetId
+        }
+        deleteSet={deleteSet}
+        startEditingSet={startEditingSet}
+      />
+    )
+  }
+  
 
 
   if (currentView === "manage") {
@@ -572,8 +679,13 @@ function App() {
         showPopup={showPopup}
         popupMessage={popupMessage}
         setShowPopup={setShowPopup}
+        popupTitle={popupTitle}
+        popupButtonText={popupButtonText}
 
         logout={logout}
+
+        editingSetId={editingSetId}
+        setEditingSetId={setEditingSetId}
       />
     );
   }

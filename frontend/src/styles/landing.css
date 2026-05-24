@@ -48,6 +48,7 @@
   font-weight: 700;
   cursor: pointer;
   transition: 0.25s ease;
+  font-family: "Spline Sans";
 }
 
 .managecard-button:hover {
@@ -74,6 +75,25 @@
 .managecard-button.manage:hover {
   background: var(--highlightlighter);
 }
+
+.admincard-button {
+  padding: 16px 34px;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+  background: #d4d4d4;
+  font-family: "Spline Sans";
+}
+
+.admincard-button:hover {
+  transform: translateY(-3px);
+  background: #e0e0e0;
+}
+
+
 
 .landing-navbar {
   position: absolute;
@@ -123,6 +143,12 @@
   border-radius: 10px;
   border: 1px solid #ddd;
   font-family: "Spline Sans";
+  
+}
+
+.auth-sidebar input:focus{
+  outline: none;
+  border-color: var(--highlight);
 }
 
 .auth-sidebar button {

@@ -88,6 +88,10 @@ export const saveHistory = async (
   flashcardSet,
   action
 ) => {
+  console.log("flashcardSet:", flashcardSet);
+  console.log("action:", action);
+  
+
   const token = localStorage.getItem("token");
 
   const res = await fetch(
@@ -101,7 +105,7 @@ export const saveHistory = async (
       }
     }
   );
-
+  console.log("TOKEN:", token);
   return await res.json();
 };
 

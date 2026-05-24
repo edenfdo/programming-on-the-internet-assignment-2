@@ -1,32 +1,54 @@
 import FlashcardForm from "../components/FlashcardForm";
 import "../styles/manage.css";
+import Popup from "../components/Popup";
 
 function ManagePage(props) {
   return (
-    <div className={`wrapper ${props.darkMode ? "dark" : ""}`}>
-      <div className="manage-topbar">
+    <div
+      className={`manage-page ${
+        props.darkMode ? "dark" : ""
+      }`}
+    >
+      
+      <Popup
+        show={props.showPopup}
+        title={props.popupTitle}
+        message={props.popupMessage}
+        buttonText={props.popupButtonText}
+        onClose={() => {
+          props.setShowPopup(false);
+
+          if (props.popupTitle === "Success!") {
+            props.setCurrentView("mysets");
+          }
+        }}
+      />
+
+      <header className="manage-header">
         <button
           className="back-button"
-          onClick={() => props.setCurrentView("landing")}
+          onClick={() =>
+            props.setCurrentView("landing")
+          }
         >
           ← Back
         </button>
-      </div>
+        <h1>Create Flashcard Set</h1>
+      </header>
 
-      <h1>Cardio</h1>
-      <p>Flash Card Creation Website</p>
-
-      <FlashcardForm
-        title={props.title}
-        setTitle={props.setTitle}
-        description={props.description}
-        setDescription={props.setDescription}
-        terms={props.terms}
-        setTerms={props.setTerms}
-        addTerm={props.addTerm}
-        deleteTerm={props.deleteTerm}
-        submitForm={props.submitForm}
-      />
+      <main className="manage-container">
+        <FlashcardForm
+          title={props.title}
+          setTitle={props.setTitle}
+          description={props.description}
+          setDescription={props.setDescription}
+          terms={props.terms}
+          setTerms={props.setTerms}
+          addTerm={props.addTerm}
+          deleteTerm={props.deleteTerm}
+          submitForm={props.submitForm}
+        />
+      </main>
     </div>
   );
 }

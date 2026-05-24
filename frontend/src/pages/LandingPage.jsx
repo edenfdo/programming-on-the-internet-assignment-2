@@ -26,9 +26,13 @@ function LandingPage({
   loadHistory,
   recordHistory,
   setSelectedStudySetId,
+  setPopupButtonText,
   showPopup,
   popupMessage,
   setPopupMessage,
+  popupButtonText,
+  setPopupTitle,
+  popupTitle,
   setShowPopup
 
   
@@ -36,11 +40,15 @@ function LandingPage({
 
   const handleManageClick = () => {
     if (!loggedIn) {
+      setPopupTitle("Hold on...");
       setPopupMessage(
         "Please log in to manage flashcards."
       );
+      setPopupButtonText("Login");
 
       setShowPopup(true);
+      setAuthMode("login");
+
       return;
     }
 
@@ -49,27 +57,58 @@ function LandingPage({
 
   const handleStudyClick = () => {
   if (!loggedIn) {
+    setPopupTitle("Hold on...");
     setPopupMessage(
       "Please log in to study flashcards."
     );
-
+    setPopupButtonText("Login");
     setShowPopup(true);
-    return;
-  }
 
+    setAuthMode("login");
+    return;
+  };
   setCurrentView("study");
-};
+}
+
+  const handleSetsClick = () => {
+    if (!loggedIn) {
+      setPopupTitle("Hold on...");
+      setPopupMessage(
+        "Please log in to view your flashcard sets."
+      );
+      setPopupButtonText("Login");
+      setShowPopup(true);
+
+      setAuthMode("login");
+      return;
+    }
+
+    setCurrentView("mysets");
+  };
+
 
   
 
   return (
     <div className="landing-page">
 
-      <Popup
+      {/* <Popup
         show={showPopup}
+        title={popupTitle}
         message={popupMessage}
-        onClose={() => setShowPopup(false)}
-      />
+        buttonText={popupButtonText}
+        onClose={() => {
+          setShowPopup(false);
+
+          if (popupTitle === "Success!") {
+            setCurrentView("mysets");
+          }
+
+          if (popupButtonText === "Login") {
+            setAuthMode("login");
+          }
+        }}
+      /> */}
 
       {/* Navbar */}
       <Navbar
@@ -170,9 +209,16 @@ function LandingPage({
             Manage Cards
           </button>
 
+          <button
+            className="managecard-button"
+            onClick={handleSetsClick}
+          >
+            My Sets
+          </button>
+
           {isAdmin && (
             <button
-              className="managecard-button"
+              className="admincard-button"
               onClick={loadHistory}
             >
               Admin Dashboard
