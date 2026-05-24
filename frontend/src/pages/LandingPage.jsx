@@ -26,6 +26,7 @@ function LandingPage({
   loadHistory,
   recordHistory,
   setSelectedStudySetId,
+  setSelectedCardIndex,
   setPopupButtonText,
   showPopup,
   popupMessage,
@@ -159,6 +160,10 @@ function LandingPage({
                         String(result.setId)
                       );
 
+                      setSelectedCardIndex(
+                        result.cardIndex
+                      );
+
                       setCurrentView("study");
                     }}
                   >
@@ -173,6 +178,10 @@ function LandingPage({
 
                         setSelectedStudySetId(
                           String(result.setId)
+                        );
+
+                        setSelectedCardIndex(
+                          result.cardIndex
                         );
 
                         setCurrentView("study");

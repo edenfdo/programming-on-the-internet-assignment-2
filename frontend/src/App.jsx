@@ -97,6 +97,9 @@ function App() {
   const [currentView, setCurrentView] = useState("landing");
 
   const [selectedStudySetId, setSelectedStudySetId] = useState("");
+
+  const [selectedCardIndex, setSelectedCardIndex] =
+    useState(0);
   // const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   // const [searchTerm, setSearchTerm] = useState("");
@@ -127,6 +130,8 @@ function App() {
   );
 
   const [globalSearch, setGlobalSearch] = useState("");
+
+  
 
   const [editingSetId, setEditingSetId] =
     useState(null);
@@ -169,14 +174,21 @@ function App() {
   const searchResults = globalSearch.trim()
   ? savedSets.flatMap((set) =>
       (set.terms || [])
-        .filter((card) =>
-          card.term.toLowerCase().includes(globalSearch.toLowerCase()) 
+        .map((card, index) => ({
+          card,
+          index
+        }))
+        .filter(({ card }) =>
+          card.term
+            .toLowerCase()
+            .includes(globalSearch.toLowerCase())
         )
-        .map((card) => ({
+        .map(({ card, index }) => ({
           setId: set.id,
           setTitle: set.title,
           term: card.term,
-          definition: card.definition
+          definition: card.definition,
+          cardIndex: index
         }))
     )
   : [];
@@ -613,6 +625,7 @@ function App() {
       loadHistory={loadHistory}
       recordHistory={recordHistory}
       setSelectedStudySetId={setSelectedStudySetId}
+      setSelectedCardIndex={setSelectedCardIndex}
       showPopup={showPopup}
       popupTitle={popupTitle}
       popupMessage={popupMessage}
@@ -633,6 +646,7 @@ function App() {
       <StudyPage
         savedSets={savedSets}
         selectedStudySetId={selectedStudySetId}
+        selectedCardIndex={selectedCardIndex}
         setSelectedStudySetId={setSelectedStudySetId}
         setCurrentView={setCurrentView}
         recordHistory={recordHistory}

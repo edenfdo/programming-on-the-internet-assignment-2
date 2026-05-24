@@ -4,6 +4,7 @@ import "../styles/study.css";
 function StudyPage({
   savedSets,
   selectedStudySetId,
+  selectedCardIndex,
   setSelectedStudySetId,
   setCurrentView,
   recordHistory
@@ -71,6 +72,7 @@ function StudyPage({
             title={selectedSet.title}
             description={selectedSet.description}
             terms={selectedSet.terms}
+            startIndex={selectedCardIndex}
           />
         </div>
       )}

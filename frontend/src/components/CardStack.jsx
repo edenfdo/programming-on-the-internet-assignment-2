@@ -3,13 +3,17 @@ import { useState } from "react";
 function CardStack({
   title,
   description,
-  terms
+  terms,
+  startIndex = 0
 }) {
   const [currentIndex, setCurrentIndex] =
-    useState(0);
+    useState(startIndex);
 
   const [flipped, setFlipped] =
-    useState(false);
+  useState(false);
+
+  
+  
 
   const hasCards =
     terms && terms.length > 0;

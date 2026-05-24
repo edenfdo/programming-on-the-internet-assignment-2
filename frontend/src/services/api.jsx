@@ -1,9 +1,5 @@
 const API_URL = "http://127.0.0.1:8000";
 
-/* --------------------------
-   AUTH
--------------------------- */
-
 export const loginUser = async (
   email,
   password
@@ -64,10 +60,6 @@ export const registerUser = async (
 
   return data;
 };
-
-/* --------------------------
-   FLASHCARD SETS
--------------------------- */
 
 export const getItems = async () => {
   const token = localStorage.getItem("token");
