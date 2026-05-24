@@ -1,28 +1,18 @@
 import FlashcardForm from "../components/FlashcardForm";
 import "../styles/manage.css";
-import Popup from "../components/Popup";
+// import Popup from "../components/Popup";
 
 function ManagePage(props) {
+
+  console.log("showPopup:", props.showPopup);
+  console.log("popupTitle:", props.popupTitle);
   return (
     <div
       className={`manage-page ${
         props.darkMode ? "dark" : ""
       }`}
     >
-      
-      <Popup
-        show={props.showPopup}
-        title={props.popupTitle}
-        message={props.popupMessage}
-        buttonText={props.popupButtonText}
-        onClose={() => {
-          props.setShowPopup(false);
-
-          if (props.popupTitle === "Success!") {
-            props.setCurrentView("mysets");
-          }
-        }}
-      />
+    
 
       <header className="manage-header">
         <button

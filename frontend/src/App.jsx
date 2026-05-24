@@ -473,6 +473,16 @@ function App() {
       setShowPopup(true);
       return;
     }
+    if (cleanedTerms.length === 0) {
+      setPopupTitle("Oops!");
+      setPopupMessage(
+        "Please add at least one flashcard before saving."
+      );
+      setPopupButtonText("Got It");
+      console.log("Opening success popup");
+      setShowPopup(true);
+      return;
+    }
 
     const payload = {
       title,

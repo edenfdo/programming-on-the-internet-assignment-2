@@ -27,6 +27,12 @@ async def create_flashcard_set(
     data,
     current_user: str
 ):
+    
+    if len(data.terms) == 0:
+      return {
+          "message": "A flashcard set must contain at least one card"
+      }
+
     new_set = {
         "owner": current_user,
         "title": data.title,
@@ -40,6 +46,8 @@ async def create_flashcard_set(
             for t in data.terms
         ]
     }
+
+    
 
     await sets_collection.insert_one(new_set)
 

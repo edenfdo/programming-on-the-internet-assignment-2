@@ -92,7 +92,7 @@ function LandingPage({
   return (
     <div className="landing-page">
 
-      {/* <Popup
+      <Popup
         show={showPopup}
         title={popupTitle}
         message={popupMessage}
@@ -108,7 +108,7 @@ function LandingPage({
             setAuthMode("login");
           }
         }}
-      /> */}
+      />
 
       {/* Navbar */}
       <Navbar
@@ -206,7 +206,7 @@ function LandingPage({
             className="managecard-button manage"
             onClick={handleManageClick}
           >
-            Manage Cards
+            Create Set
           </button>
 
           <button
