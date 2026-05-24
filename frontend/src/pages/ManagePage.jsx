@@ -1,6 +1,5 @@
 import FlashcardForm from "../components/FlashcardForm";
 import "../styles/manage.css";
-// import Popup from "../components/Popup";
 
 function ManagePage(props) {
 

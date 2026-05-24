@@ -5,8 +5,6 @@ import Popup from "../components/Popup";
 
 function LandingPage({
   loggedIn,
-  // isRegisterMode,
-  // setIsRegisterMode,
   authMode,
   setAuthMode,
   logout,
@@ -19,8 +17,6 @@ function LandingPage({
   globalSearch,
   setGlobalSearch,
   searchResults,
-  // showLoginPrompt,
-  // setShowLoginPrompt,
   setCurrentView,
   isAdmin,
   loadHistory,
