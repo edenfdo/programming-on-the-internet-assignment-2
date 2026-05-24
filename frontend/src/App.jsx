@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import "./index.css";
 
-// import CardStack from "./components/CardStack";
-// import AuthSidebar from "./components/AuthSidebar";
+
 import LandingPage from "./pages/LandingPage";
 import StudyPage from "./pages/StudyPage";
 import ManagePage from "./pages/ManagePage";
@@ -11,71 +10,11 @@ import SetsPage from "./pages/SetsPage";
 
 import {
   loginUser,
-  // registerUser,
   getItems,
-  // saveItems,
   saveHistory,
   getHistory
 } from "./services/api";
 
-// Cleaned CardStack component using CSS classes
-// function CardStack({ title, description, terms }) {
-//   const [currentIndex, setCurrentIndex] = useState(0);
-//   const [flipped, setFlipped] = useState(false);
-
-//   const hasCards = terms && terms.length > 0;
-//   const currentCard = hasCards ? terms[currentIndex] : null;
-
-//   const nextCard = (e) => {
-//     e.stopPropagation();
-//     setFlipped(false);
-//     setCurrentIndex((prev) => (prev + 1) % terms.length);
-//   };
-
-//   const prevCard = (e) => {
-//     e.stopPropagation();
-//     setFlipped(false);
-//     setCurrentIndex((prev) => (prev - 1 + terms.length) % terms.length);
-//   };
-
-//   return (
-//     <div className="set-card-stack">
-//       <h3 className="set-card-title">{title}</h3>
-//       <p className="set-card-description">{description}</p>
-      
-//       {hasCards ? (
-//         <div className="stack-inner-container">
-//           <div className="stack-perspective-wrapper">
-//             <div className="stack-bg-layer-1"></div>
-//             <div className="stack-bg-layer-2"></div>
-            
-//             <div 
-//               onClick={() => setFlipped(!flipped)}
-//               className={`main-flashcard ${flipped ? "flipped" : ""}`}
-//             >
-//               <span className="card-side-indicator">
-//                 {flipped ? "Definition" : "Term"}
-//               </span>
-//               <strong className="card-text-content">
-//                 {flipped ? currentCard.definition : currentCard.term}
-//               </strong>
-//             </div>
-//           </div>
-
-//           <div className="stack-navigation-row">
-//             <button onClick={prevCard} className="stack-nav-button">← Back</button>
-//             <span className="stack-counter">{currentIndex + 1} / {terms.length}</span>
-//             <button onClick={nextCard} className="stack-nav-button">Next →</button>
-//           </div>
-//         </div>
-//       ) : (
-//         <p className="empty-set-message">
-//           No matching flashcards found.
-//         </p>
-//       )}
-//     </div>
-//   );
-// }
 
 function App() {
   
@@ -100,9 +39,7 @@ function App() {
 
   const [selectedCardIndex, setSelectedCardIndex] =
     useState(0);
-  // const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
-  // const [searchTerm, setSearchTerm] = useState("");
   
 
   const [loggedIn, setLoggedIn] = useState(
@@ -193,29 +130,6 @@ function App() {
     )
   : [];
 
-  // const loadHistory = async () => {
-  //     try {
-  //       const token = localStorage.getItem("token");
-
-  //       const res = await fetch(
-  //         "http://127.0.0.1:8000/view_history",
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`
-  //           }
-  //         }
-  //       );
-
-  //       const data = await res.json();
-
-  //       setHistory(data);
-
-  //       setCurrentView("admin");
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
-
   const login = async () => {
     try {
       const data = await loginUser(email, password);
@@ -280,42 +194,6 @@ function App() {
     }
   };
 
-  // const login = async () => {
-  //   const body = new URLSearchParams();
-  //   body.append("username", email);
-  //   body.append("password", password);
-
-  //   const res = await fetch("http://127.0.0.1:8000/token", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //     body
-  //   });
-
-  //   if (!res.ok) {
-  //     alert("Invalid login credentials");
-  //     return;
-  //   }
-
-  //   const data = await res.json();
-
-  //   localStorage.setItem(
-  //     "token",
-  //     data.access_token
-  //   );
-
-  //   localStorage.setItem(
-  //     "role",
-  //     data.role
-  //   );
-
-  //   setLoggedIn(true);
-
-  //   setIsAdmin(
-  //     data.role === "admin"
-  //   );
-
-  //   fetchExistingItems();
-  // };
 
   const register = async () => {
     if (email.length < 3 || password.length < 4) {
@@ -368,94 +246,6 @@ function App() {
     setPassword("");
   };
 
-//   const fetchExistingItems = async () => {
-//   try {
-//     const token = localStorage.getItem("token");
-//     if (!token) return;
-
-//     const res = await fetch("http://127.0.0.1:8000/items", {
-//       headers: {
-//         Authorization: `Bearer ${token}`
-//       }
-//     });
-
-//     const data = await res.json();
-
-//     if (Array.isArray(data)) {
-//       setSavedSets(data);
-//     }
-//   } catch (err) {
-//     console.error("Error getting items", err);
-//   }
-// };
-
-// const recordHistory = async (
-//   flashcardSet,
-//   action
-// ) => {
-//   const token = localStorage.getItem("token");
-
-//   await fetch(
-//     `http://127.0.0.1:8000/history?flashcard_set=${encodeURIComponent(
-//       flashcardSet
-//     )}&action=${encodeURIComponent(action)}`,
-//     {
-//       method: "POST",
-//       headers: {
-//         Authorization: `Bearer ${token}`
-//       }
-//     }
-//   );
-// };
-
-  // const login = async () => {
-  //   const body = new URLSearchParams();
-  //   body.append("username", email);
-  //   body.append("password", password);
-
-  //   const res = await fetch("http://127.0.0.1:8000/token", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //     body
-  //   });
-
-  //   if (!res.ok) {
-  //     alert("Invalid login");
-  //     return;
-  //   }
-
-  //   const data = await res.json();
-  //   localStorage.setItem("token", data.access_token);
-  //   setLoggedIn(true);
-
-  //   fetch(
-  //     "http://127.0.0.1:8000/items",
-  //     {
-  //       headers: {
-  //         "Authorization": "Bearer " + localStorage.getItem("token")
-  //       }
-  //     }
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.length > 0) {
-  //         const firstSet = data[0];
-  //         setTitle(firstSet.title);
-  //         setDescription(firstSet.description);
-  //         setTerms(firstSet.terms);
-  //       }
-  //     })
-  //     .catch((err) => console.error("Error getting items", err));
-  // };
-
-  // const logout = () => {
-  //   localStorage.removeItem("token");
-  //   setLoggedIn(false);
-
-  //   // Reset login form fields
-  //   setEmail("");
-  //   setPassword("");
-  // }
 
   //add a new empty term row
   const addTerm = () => {
@@ -573,27 +363,6 @@ function App() {
       fetchExistingItems();
     }
   }, [loggedIn]);
-
-  // useEffect(() => {
-  //   fetch(
-  //     "http://127.0.0.1:8000/items",
-  //     {
-  //       headers: {
-  //         "Authorization": "Bearer " + localStorage.getItem("token")
-  //       }
-  //     }
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.length > 0) {
-  //         const firstSet = data[0];
-  //         setTitle(firstSet.title);
-  //         setDescription(firstSet.description);
-  //         setTerms(firstSet.terms);
-  //       }
-  //     })
-  //     .catch((err) => console.error("Error getting items", err));
-  // }, []);
 
   
 
