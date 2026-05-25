@@ -1,5 +1,7 @@
+// API url
 const API_URL = "http://127.0.0.1:8000";
 
+// Exports async function named loginUser.
 export const loginUser = async (
   email,
   password
@@ -9,6 +11,7 @@ export const loginUser = async (
   body.append("username", email);
   body.append("password", password);
 
+  // Adds the username and password
   const res = await fetch(
     `${API_URL}/token`,
     {
@@ -21,6 +24,7 @@ export const loginUser = async (
     }
   );
 
+  //If the response is not ok, throw an error
   if (!res.ok) {
     throw new Error(
       "Invalid login credentials"
@@ -30,10 +34,12 @@ export const loginUser = async (
   return await res.json();
 };
 
+// Exports an async function to register a new user
 export const registerUser = async (
   email,
   password
 ) => {
+  // Sends JSON containing username and password
   const res = await fetch(
     `${API_URL}/register`,
     {
@@ -51,6 +57,7 @@ export const registerUser = async (
 
   const data = await res.json();
 
+  // If registration failed, throw an error
   if (!res.ok) {
     throw new Error(
       data.detail ||
@@ -61,6 +68,7 @@ export const registerUser = async (
   return data;
 };
 
+// Exports a function to fetch items from the backend
 export const getItems = async () => {
   const token = localStorage.getItem("token");
 
@@ -75,6 +83,7 @@ export const getItems = async () => {
 
   const data = await res.json();
 
+  // Throws an error if the request failed
   if (!res.ok) {
     throw new Error(
       data.detail || "Failed to retrieve items"
@@ -84,6 +93,7 @@ export const getItems = async () => {
   return data;
 };
 
+// Exports a function to save a history entry
 export const saveHistory = async (
   flashcardSet,
   action
@@ -104,6 +114,7 @@ export const saveHistory = async (
 
   const data = await res.json();
 
+  // Throws an error if saving failed
   if (!res.ok) {
     throw new Error(
       data.detail || "Failed to save history"
@@ -113,6 +124,7 @@ export const saveHistory = async (
   return data;
 };
 
+// Exports a function to fetch all history entries
 export const getHistory = async () => {
   const token = localStorage.getItem("token");
 
@@ -127,6 +139,7 @@ export const getHistory = async () => {
 
   const data = await res.json();
 
+  // Throws an error if the request failed
   if (!res.ok) {
     throw new Error(
       data.detail || "Failed to retrieve history"
@@ -136,6 +149,7 @@ export const getHistory = async () => {
   return data;
 };
 
+// Exports a function to save flashcard sets
 export const saveItems = async (
   payload
 ) => {
@@ -155,6 +169,7 @@ export const saveItems = async (
 
   const data = await res.json();
 
+  // Throws an error if saving failed
   if (!res.ok) {
     throw new Error(
       data.detail || "Failed to save items"
