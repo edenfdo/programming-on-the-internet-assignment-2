@@ -1,3 +1,7 @@
+.admin-page{
+  background: var(--bg);
+}
+
 .history-grid {
   display: grid;
   gap: 1rem;
@@ -5,7 +9,7 @@
 }
 
 .history-card {
-  background: white;
+  background: var(--accent);
   border-left: 6px solid var(--main);
 
   padding: 20px;
@@ -46,4 +50,11 @@
 .action-studied {
   color: var(--main);
   font-weight: 700;
+}
+
+.history-title {
+  color: var(--main);
+  font-family: "Spline Sans";
+  font-weight: 450;
+  
 }

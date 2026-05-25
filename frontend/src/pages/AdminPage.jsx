@@ -5,6 +5,9 @@ function AdminPage({
   history,
   setCurrentView
 }) {
+
+  document.body.classList.contains("dark")
+
   return (
     <div className="admin-page">
 

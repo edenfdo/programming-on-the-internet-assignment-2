@@ -5,7 +5,8 @@ function SetsPage({
   setCurrentView,
   setSelectedStudySetId,
   deleteSet,
-  startEditingSet
+  startEditingSet,
+  recordHistory
 }) {
   return (
     <div className="mysets-page">
@@ -45,6 +46,11 @@ function SetsPage({
 
                 <button
                   onClick={() => {
+                    recordHistory(
+                      set.title,
+                      "studied"
+                    );
+
                     setSelectedStudySetId(
                       String(set.id)
                     );
