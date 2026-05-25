@@ -60,6 +60,8 @@ http://127.0.0.1:8000
 
 ## Frontend Setup
 
+Do this in a *new* terminal window.
+
 ### Navigate to the frontend directory
 
 ```bash
