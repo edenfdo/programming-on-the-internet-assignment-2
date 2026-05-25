@@ -139,45 +139,46 @@ A default admin account is automatically created when the backend starts if it d
 
 ```
 .
+├── .gitignore                        # Tells git which files should not be included in git index
 ├── README.md                         # Setup and documentation
-│
+|
 ├── backend                           # Backend (FastAPI / Python)
+│   ├── .env                          # Stores secret key used when creating access token, not included in git repo
+│   ├── .env.example                  # Example env file which users can modify   
+│   ├── config.py                     # Reads variables from env file
 │   ├── main.py                       # Entry point
-│   │
+|   |
 │   ├── models                        # Database models
-│   │   └── database.py               # Database connection and setup
-│   │
+│   │   └── database.py               # Database connection 
+|   |
 │   ├── requirements.txt              # Python dependencies
-│   │
+|   |
 │   ├── routes                        # API route definitions
 │   │   ├── auth_routes.py            # Authentication routes
 │   │   ├── flashcard_routes.py       # Flashcard CRUD routes
 │   │   └── history_routes.py         # User history routes
-│   │
+|   |
 │   ├── schemas                       # Data validation (Pydantic schemas)
 │   │   ├── flashcard_schema.py       # Flashcard schemas
 │   │   └── user_schema.py            # User-related schemas
-│   │
+|   |
 │   └── services                      # Business logic
 │       ├── auth_service.py           # Authentication / user logic
 │       ├── flashcard_service.py      # Flashcard processing logic
 │       └── history_service.py        # Learning history logic
-│
+|
 └── frontend                          # Frontend (React / Vite app)
-    │
     ├── eslint.config.js              # ESLint configuration
     ├── index.html                    # Root HTML file
     ├── package-lock.json             # Locked dependency versions
     ├── package.json                  # Frontend dependencies
-    │
+    |
     ├── public                        # Static assets
     │   └── brain.png                 # App icon
-    │
+    |
     ├── src                           # Frontend source code
-    │   │
     │   ├── App.jsx                   # Root React component
-    │   ├── main.jsx                  # App entrypoint
-    │   │
+    |   |
     │   ├── components                # Reusable UI components
     │   │   ├── AuthSidebar.jsx       # Login UI
     │   │   ├── CardStack.jsx         # Flashcard stack UI
@@ -186,17 +187,19 @@ A default admin account is automatically created when the backend starts if it d
     │   │   ├── Navbar.jsx            # Top navigation bar
     │   │   ├── Popup.jsx             # Popup component
     │   │   └── SearchBar.jsx         # Search input component
-    │   │
+    |   |
+    │   ├── main.jsx                  # App entrypoint
+    |   |
     │   ├── pages                     # Page-level components
     │   │   ├── AdminPage.jsx         # Admin dashboard
     │   │   ├── CreateSetPage.jsx     # Create flashcard set page
     │   │   ├── LandingPage.jsx       # Landing/home page
     │   │   ├── SetsPage.jsx          # List of flashcard sets
     │   │   └── StudyPage.jsx         # Study/flashcard view page
-    │   │
+    |   |
     │   ├── services                  # API calls
     │   │   └── api.jsx               # Central API handler
-    │   │
+    |   |
     │   └── styles                    # CSS stylesheets
     │       ├── admin.css             # Admin page styles
     │       ├── create.css            # Create set page styles
@@ -206,6 +209,8 @@ A default admin account is automatically created when the backend starts if it d
     │       └── study.css             # Study page styles
     │
     └── vite.config.js                # Vite build configuration
+
+15 directories, 45 files
 ```
 
 ---
