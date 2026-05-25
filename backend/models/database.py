@@ -12,4 +12,5 @@ sets_collection = db.flashcard_sets
 #collection for user data
 users_collection = db.users
 
+#selects the learning_history collection
 history_collection = db.learning_history

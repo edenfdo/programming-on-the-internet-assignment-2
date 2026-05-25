@@ -12,13 +12,15 @@ from services.auth_service import (
     login_user_service
 )
 
-
+# Router initialisation
 router = APIRouter()
 
+# Registration endpoint
 @router.post("/register")
 async def register_user(user_data: UserRegister):
     return await register_user_service(user_data)
 
+# Login endpoint
 @router.post("/token")
 async def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends()
