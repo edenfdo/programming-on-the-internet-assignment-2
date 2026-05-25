@@ -10,6 +10,7 @@ export default function AuthSidebar({
   return (
     <div className="auth-sidebar">
 
+      {/* Title based on whether the user is logined in or not */}
       <h2>
         {authMode === "register"
           ? "Create Account"
@@ -23,12 +24,14 @@ export default function AuthSidebar({
         }
       />
 
+      {/* Password */}
       <input
         type="password"
         value={password}
         onChange={(e) =>
           setPassword(e.target.value)
         }
+        // enter key handling
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             authMode === "register"
@@ -38,6 +41,7 @@ export default function AuthSidebar({
         }}
       />
 
+      {/* Submit button */}
       <button
         onClick={
           authMode === "register"
