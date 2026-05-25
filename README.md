@@ -121,6 +121,8 @@ A default admin account is automatically created when the backend starts if it d
 ### Database
 - MongoDB
 
+---
+
 ## Project Structure
 
 ```
