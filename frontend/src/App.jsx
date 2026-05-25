@@ -489,13 +489,7 @@ function App() {
   );
 
   
-  console.log("selectedCardIndex =", selectedCardIndex);
-  console.log("selectedStudySetId =", selectedStudySetId);
-  console.log("darkMode =", darkMode);
-  console.log(
-    "body dark?",
-    document.body.classList.contains("dark")
-  );
+  
   return (
     <>
       <Popup

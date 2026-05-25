@@ -69,9 +69,6 @@ function CardStack({
     );
   }
 
-  console.log("CardStack startIndex:", startIndex);
-  console.log("currentIndex:", currentIndex);
-
   return (
     <div className="set-card-stack">
 

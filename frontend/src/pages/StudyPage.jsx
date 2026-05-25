@@ -22,10 +22,7 @@ function StudyPage({
       )
     : 0;
 
-  console.log(
-    "StudyPage received index:",
-    selectedCardIndex
-  );
+
   return (
     
     <div className="study-page">
