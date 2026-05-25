@@ -10,6 +10,12 @@ Cardio is an invaluable tool for users who need to learn or memorise large amoun
 
 ## Backend Setup
 
+### Navigate to the backend directory
+
+```bash
+cd backend/
+```
+
 ### Install dependencies
 
 ```bash
@@ -53,6 +59,12 @@ http://127.0.0.1:8000
 ---
 
 ## Frontend Setup
+
+### Navigate to the frontend directory
+
+```bash
+cd frontend/
+```
 
 ### Install dependencies
 
