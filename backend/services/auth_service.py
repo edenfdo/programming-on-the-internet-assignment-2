@@ -5,11 +5,9 @@ from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import bcrypt
 import jwt
+from config import SECRET_KEY
 from models.database import users_collection
 from schemas.user_schema import UserRegister
-
-SECRET_KEY = "cardio-secret-key"
-# SECRET_KEY = os.environ["SECRET_KEY"]
 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
@@ -32,8 +30,12 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     )
     return bcrypt.checkpw(pwd_bytes, hashed_bytes)
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = ACCESS_TOKEN_EXPIRE_MINUTES): # if caller doesn't specify expires_delta use default which is 30mins
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
+
+    if expires_delta is None:
+      expires_delta = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+
     expire = datetime.now(timezone.utc) + expires_delta
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
