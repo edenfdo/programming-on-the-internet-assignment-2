@@ -10,7 +10,7 @@ export default function AuthSidebar({
   return (
     <div className="auth-sidebar">
 
-      {/* Title based on whether the user is logined in or not */}
+      {/* Title based on whether the user is logged in or not */}
       <h2>
         {authMode === "register"
           ? "Create Account"
