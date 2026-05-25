@@ -6,9 +6,10 @@ from services.history_service import (
     view_history_service
 )
 
+# Router initialisation
 router = APIRouter()
 
-
+# Save a history entry
 @router.post("/history")
 async def save_history(
     flashcard_set: str,
@@ -21,7 +22,7 @@ async def save_history(
         current_user
     )
 
-
+# Retrieve user history
 @router.get("/view_history")
 async def view_history(
     current_user=Depends(get_current_user)
