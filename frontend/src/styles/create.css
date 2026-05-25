@@ -312,7 +312,7 @@ input, textarea {
 
 .form-section:first-child input:focus,
 .form-section:first-child textarea:focus {
-  background: var(--mainlight);
+  background: #c0d5db;
 
   border-color: var(--main);
 
