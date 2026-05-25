@@ -1,7 +1,7 @@
 import FlashcardForm from "../components/FlashcardForm";
-import "../styles/manage.css";
+import "../styles/create.css";
 
-function ManagePage(props) {
+function CreateSetPage(props) {
 
   console.log("showPopup:", props.showPopup);
   console.log("popupTitle:", props.popupTitle);
@@ -42,4 +42,4 @@ function ManagePage(props) {
   );
 }
 
-export default ManagePage;
+export default CreateSetPage;

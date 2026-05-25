@@ -4,9 +4,10 @@ import "./index.css";
 
 import LandingPage from "./pages/LandingPage";
 import StudyPage from "./pages/StudyPage";
-import ManagePage from "./pages/ManagePage";
+import CreateSetPage from "./pages/CreateSetPage";
 import AdminPage from "./pages/AdminPage";
 import SetsPage from "./pages/SetsPage";
+import Popup from "./components/Popup"
 
 import {
   loginUser,
@@ -372,8 +373,8 @@ function App() {
     document.body.classList.toggle("dark", darkMode);
   }, [darkMode]);
 
-  if (currentView === "landing") {
-  return (
+  const currentPage =
+  currentView === "landing" ? (
     <LandingPage
       loggedIn={loggedIn}
       
@@ -409,82 +410,88 @@ function App() {
       darkMode={darkMode}
       setDarkMode={setDarkMode}
     />
+  ) : currentView === "study" ? (
+    <StudyPage
+      savedSets={savedSets}
+      selectedStudySetId={selectedStudySetId}
+      selectedCardIndex={selectedCardIndex}
+      setSelectedStudySetId={setSelectedStudySetId}
+      setCurrentView={setCurrentView}
+      recordHistory={recordHistory}
+    />
+  ) : currentView === "manage" ? (
+    <CreateSetPage
+      darkMode={darkMode}
+      setDarkMode={setDarkMode}
+
+      setCurrentView={setCurrentView}
+
+      title={title}
+      setTitle={setTitle}
+
+      description={description}
+      setDescription={setDescription}
+
+      terms={terms}
+      setTerms={setTerms}
+
+      addTerm={addTerm}
+      deleteTerm={deleteTerm}
+      submitForm={submitForm}
+
+      showPopup={showPopup}
+      popupMessage={popupMessage}
+      setShowPopup={setShowPopup}
+      popupTitle={popupTitle}
+      popupButtonText={popupButtonText}
+
+      logout={logout}
+
+      editingSetId={editingSetId}
+      setEditingSetId={setEditingSetId}
+    />
+  ) : currentView === "mysets" ? (
+    <SetsPage
+      savedSets={savedSets}
+      setCurrentView={setCurrentView}
+      setSelectedStudySetId={
+        setSelectedStudySetId
+      }
+      deleteSet={deleteSet}
+      startEditingSet={startEditingSet}
+    />
+  ) : (
+    <AdminPage
+      history={history}
+      setCurrentView={setCurrentView}
+    />
   );
-}
 
-  if (currentView === "study") {
-    return (
-      <StudyPage
-        savedSets={savedSets}
-        selectedStudySetId={selectedStudySetId}
-        selectedCardIndex={selectedCardIndex}
-        setSelectedStudySetId={setSelectedStudySetId}
-        setCurrentView={setCurrentView}
-        recordHistory={recordHistory}
-      />
-    );
-  }
-
-  if (currentView === "admin") {
-    return (
-      <AdminPage
-        history={history}
-        setCurrentView={setCurrentView}
-      />
-    );
-  }
-
-  if (currentView === "mysets") {
-    return(
-      <SetsPage
-        savedSets={savedSets}
-        setCurrentView={setCurrentView}
-        setSelectedStudySetId={
-          setSelectedStudySetId
-        }
-        deleteSet={deleteSet}
-        startEditingSet={startEditingSet}
-      />
-    )
-  }
   
 
+  return (
+    <>
+      <Popup
+        show={showPopup}
+        title={popupTitle}
+        message={popupMessage}
+        buttonText={popupButtonText}
+        onClose={() => {
+          setShowPopup(false);
 
-  if (currentView === "manage") {
-    return (
-      <ManagePage
-        darkMode={darkMode}
-        setDarkMode={setDarkMode}
+          if (popupTitle === "Success!") {
+            setCurrentView("mysets");
+          }
 
-        setCurrentView={setCurrentView}
-
-        title={title}
-        setTitle={setTitle}
-
-        description={description}
-        setDescription={setDescription}
-
-        terms={terms}
-        setTerms={setTerms}
-
-        addTerm={addTerm}
-        deleteTerm={deleteTerm}
-        submitForm={submitForm}
-
-        showPopup={showPopup}
-        popupMessage={popupMessage}
-        setShowPopup={setShowPopup}
-        popupTitle={popupTitle}
-        popupButtonText={popupButtonText}
-
-        logout={logout}
-
-        editingSetId={editingSetId}
-        setEditingSetId={setEditingSetId}
+          if (popupButtonText === "Login") {
+            setAuthMode("login");
+          }
+        }}
       />
-    );
-  }
-  return null;
+
+      {currentPage}
+    </>
+  );
 }
 
 export default App;

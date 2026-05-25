@@ -1,7 +1,6 @@
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import "../styles/landing.css";
-import Popup from "../components/Popup";
 
 function LandingPage({
   loggedIn,
@@ -24,12 +23,8 @@ function LandingPage({
   setSelectedStudySetId,
   setSelectedCardIndex,
   setPopupButtonText,
-  showPopup,
-  popupMessage,
   setPopupMessage,
-  popupButtonText,
   setPopupTitle,
-  popupTitle,
   setShowPopup,
   darkMode,
   setDarkMode
@@ -90,24 +85,6 @@ function LandingPage({
 
   return (
     <div className="landing-page">
-
-      <Popup
-        show={showPopup}
-        title={popupTitle}
-        message={popupMessage}
-        buttonText={popupButtonText}
-        onClose={() => {
-          setShowPopup(false);
-
-          if (popupTitle === "Success!") {
-            setCurrentView("mysets");
-          }
-
-          if (popupButtonText === "Login") {
-            setAuthMode("login");
-          }
-        }}
-      />
 
       {/* Navbar */}
       <Navbar
