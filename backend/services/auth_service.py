@@ -9,14 +9,13 @@ from config import SECRET_KEY
 from models.database import users_collection
 from schemas.user_schema import UserRegister
 
+# Token configuration
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-# class Status(Enum):
-#     HTTP_401_UNAUTHORIZED = 401
-
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+# Password hashing
 def get_password_hash(password: str) -> str:
     pwd_bytes = password.encode("utf-8")
     salt = bcrypt.gensalt(rounds=12)
@@ -30,6 +29,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     )
     return bcrypt.checkpw(pwd_bytes, hashed_bytes)
 
+# JWT token creation
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
 
@@ -41,6 +41,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+# authentication
 async def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -67,6 +68,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
             detail="Could not validate credentials"
         )
     
+# User registration 
 async def register_user_service(
     user_data: UserRegister
 ):
@@ -94,6 +96,7 @@ async def register_user_service(
         "message": "User registered successfully"
     }
 
+# User login
 async def login_user_service(
     form_data
 ):
@@ -126,6 +129,7 @@ async def login_user_service(
         "role": user["role"]
     }
 
+# Create admin user
 async def create_default_admin():
     admin = await users_collection.find_one(
         {"username": "admin"}
