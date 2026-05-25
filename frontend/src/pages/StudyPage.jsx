@@ -27,7 +27,9 @@ function StudyPage({
           ← Back
         </button>
 
-        <h1>Study Flashcards</h1>
+        <div classname="title">
+          Study Flashcards
+        </div>
       </div>
 
       <div className="study-selector-container">

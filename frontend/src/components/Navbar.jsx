@@ -2,8 +2,11 @@ function Navbar({
   loggedIn,
   authMode,
   setAuthMode,
-  logout
+  logout,
+  darkMode,
+  setDarkMode
 }) {
+  console.log("darkMode =", darkMode);
   return (
     <div className="landing-navbar">
       {!loggedIn ? (
@@ -42,6 +45,13 @@ function Navbar({
           Logout
         </button>
       )}
+      <button
+        className="theme-toggle"
+        onClick={() => setDarkMode(!darkMode)}
+      >
+        {darkMode ? "☀" : "☾"}
+      </button>
+      
     </div>
   );
 }

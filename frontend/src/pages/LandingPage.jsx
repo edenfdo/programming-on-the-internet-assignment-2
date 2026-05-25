@@ -30,7 +30,9 @@ function LandingPage({
   popupButtonText,
   setPopupTitle,
   popupTitle,
-  setShowPopup
+  setShowPopup,
+  darkMode,
+  setDarkMode
 
   
 }) {
@@ -113,6 +115,8 @@ function LandingPage({
         authMode={authMode}
         setAuthMode={setAuthMode}
         logout={logout}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
       />
 
       

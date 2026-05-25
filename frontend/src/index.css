@@ -1,5 +1,5 @@
 :root {
-   --titletext:rgb(28, 28, 28);
+  --titletext:rgb(28, 28, 28);
   --subheading: #00000080;
   --bg: #fff;
   --border: #e5e4e7;
@@ -13,17 +13,44 @@
   --yellow: #ecc75d;
   --pink: #b35686;
 }
+
+body.dark {
+  --mainlight: #4a7e8d;
+  --main: #346471;
+  --highlight: #569fb3;
+  --highlightlighter: #c0d5db;
+
+  --yellowlight: #5a513d;
+  --yellow: #ecc75d;
+
+  --bg: #121212;
+  --titletext: white;
+  --subheading: rgba(255, 255, 255, 0.7);
+
+  --border: #333;
+  --code-bg: #1e1e1e;
+  --accent: #1e1e1e;
+}
+
+
 body {
   margin: 0;
 }
 
+.title{
+  font-family: "Spline Sans";
+  font-weight: 450;
+  
+  color: var(--subheading)
+}
 
 
 h1,
 h2 {
   font-family: "Spline Sans";
   font-weight: 450;
-  color: var(--titletext);
+  
+  color: var(--subheading)
 
 }
 

@@ -406,6 +406,8 @@ function App() {
       authMode={authMode}
       setAuthMode={setAuthMode}
       savedSets={savedSets}
+      darkMode={darkMode}
+      setDarkMode={setDarkMode}
     />
   );
 }

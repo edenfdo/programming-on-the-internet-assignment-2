@@ -214,7 +214,7 @@
 
   font-size: 2.5rem;
 
-  color: var(--titletext);
+  /* color: var(--titletext); */
 }
 
 .set-card-description {

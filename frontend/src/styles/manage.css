@@ -563,7 +563,6 @@ input,
 textarea {
   font-family: "Spline Sans", sans-serif;
   font-size: 1rem;
-  color: var(--titletext);
 }
 
 .input-panel label {
