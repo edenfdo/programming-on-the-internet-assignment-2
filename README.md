@@ -16,6 +16,18 @@ Cardio is an invaluable tool for users who need to learn or memorise large amoun
 pip install -r requirements.txt
 ```
 
+### Configure environment variables
+
+This project uses environment variables for configuration.
+
+Create a `.env` file in the `backend/` directory:
+
+```
+SECRET_KEY=<your secret key>
+```
+
+An example file is also provided at `.env.example`.
+
 ### Install and start MongoDB
 
 The following instructions are for **MacOS**. There would be a similar process for other operating systems.
