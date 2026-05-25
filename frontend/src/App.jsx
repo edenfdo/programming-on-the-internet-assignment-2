@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./index.css";
+import "./styles/index.css";
 
 
 import LandingPage from "./pages/LandingPage";
@@ -69,7 +69,14 @@ function App() {
 
   const [globalSearch, setGlobalSearch] = useState("");
 
-  
+  const openCreateSet = () => {
+    setTitle("");
+    setDescription("");
+    setTerms([]);
+    setEditingSetId(null);
+
+    setCurrentView("manage");
+  };
 
   const [editingSetId, setEditingSetId] =
     useState(null);
@@ -198,6 +205,7 @@ function App() {
 
   const register = async () => {
     if (email.length < 3 || password.length < 4) {
+      setPopupTitle("Invalid Details");
       setPopupMessage(
         "Username must be at least 3 characters and password must be at least 4 characters."
       );
@@ -276,13 +284,29 @@ function App() {
       setShowPopup(true);
       return;
     }
-    if (cleanedTerms.length === 0) {
-      setPopupTitle("Oops!");
+    if (terms.length === 0) {
+      setPopupTitle("No Flashcards");
       setPopupMessage(
-        "Please add at least one flashcard before saving."
+        "Add at least one flashcard before saving."
       );
-      setPopupButtonText("Got It");
-      console.log("Opening success popup");
+      setPopupButtonText("OK");
+      setShowPopup(true);
+      return;
+    }
+
+    // Cards exist but some are incomplete
+    const incompleteCards = terms.some(
+      t =>
+        !t.term.trim() ||
+        !t.definition.trim()
+    );
+
+    if (incompleteCards) {
+      setPopupTitle("Incomplete Flashcards");
+      setPopupMessage(
+        "Some flashcards are missing a term or definition."
+      );
+      setPopupButtonText("OK");
       setShowPopup(true);
       return;
     }
@@ -339,13 +363,7 @@ function App() {
 
         setTitle("");
         setDescription("");
-        setTerms([
-          {
-            id: "",
-            term: "",
-            definition: ""
-          }
-        ]);
+        setTerms([]);
 
         fetchExistingItems();
         //setCurrentView("mysets");
@@ -409,6 +427,7 @@ function App() {
       savedSets={savedSets}
       darkMode={darkMode}
       setDarkMode={setDarkMode}
+      openCreateSet={openCreateSet}
     />
   ) : currentView === "study" ? (
     <StudyPage

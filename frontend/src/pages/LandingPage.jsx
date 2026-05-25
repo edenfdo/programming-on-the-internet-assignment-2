@@ -27,7 +27,8 @@ function LandingPage({
   setPopupTitle,
   setShowPopup,
   darkMode,
-  setDarkMode
+  setDarkMode,
+  openCreateSet
 
   
 }) {
@@ -46,7 +47,7 @@ function LandingPage({
       return;
     }
 
-    setCurrentView("manage");
+    openCreateSet();
   };
 
   const handleStudyClick = () => {
