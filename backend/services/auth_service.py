@@ -123,3 +123,19 @@ async def login_user_service(
         "token_type": "bearer",
         "role": user["role"]
     }
+
+async def create_default_admin():
+    admin = await users_collection.find_one(
+        {"username": "admin"}
+    )
+
+    if not admin:
+        await users_collection.insert_one({
+            "username": "admin",
+            "hashed_password": get_password_hash(
+                "admin"
+            ),
+            "role": "admin"
+        })
+
+        print("Admin account created")
