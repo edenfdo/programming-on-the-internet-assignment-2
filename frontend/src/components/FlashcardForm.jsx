@@ -82,8 +82,6 @@ function FlashcardForm({
           >
             <div className="card-header">
               <h3>Card {index + 1}</h3>
-
-              {terms.length > 1 && (
                 <button
                   className="delete-btn"
                   onClick={() => deleteTerm(index)}
@@ -105,7 +103,7 @@ function FlashcardForm({
                     <path d="M9 6V4h6v2" />
                   </svg>
                 </button>
-              )}
+              
             </div>
 
             <div className="card-body">

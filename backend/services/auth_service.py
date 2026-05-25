@@ -5,8 +5,12 @@ from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import bcrypt
 import jwt
+from models.database import users_collection
+from schemas.user_schema import UserRegister
 
 SECRET_KEY = "cardio-secret-key"
+# SECRET_KEY = os.environ["SECRET_KEY"]
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -60,3 +64,62 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
             status_code=401,
             detail="Could not validate credentials"
         )
+    
+async def register_user_service(
+    user_data: UserRegister
+):
+    existing_user = await users_collection.find_one(
+        {"username": user_data.username}
+    )
+
+    if existing_user:
+        raise HTTPException(
+            status_code=400,
+            detail="Username already registered"
+        )
+
+    hashed_password = get_password_hash(
+        user_data.password
+    )
+
+    await users_collection.insert_one({
+        "username": user_data.username,
+        "hashed_password": hashed_password,
+        "role": "student"
+    })
+
+    return {
+        "message": "User registered successfully"
+    }
+
+async def login_user_service(
+    form_data
+):
+    user = await users_collection.find_one(
+        {"username": form_data.username}
+    )
+
+    if not user or not verify_password(
+        form_data.password,
+        user["hashed_password"]
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Incorrect username or password"
+        )
+
+    access_token = create_access_token(
+        data={
+            "sub": user["username"],
+            "role": user["role"]
+        },
+        expires_delta=timedelta(
+            minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+        )
+    )
+
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "role": user["role"]
+    }

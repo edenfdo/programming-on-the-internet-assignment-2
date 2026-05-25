@@ -73,17 +73,21 @@ export const getItems = async () => {
     }
   );
 
-  return await res.json();
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(
+      data.detail || "Failed to retrieve items"
+    );
+  }
+
+  return data;
 };
 
 export const saveHistory = async (
   flashcardSet,
   action
 ) => {
-  console.log("flashcardSet:", flashcardSet);
-  console.log("action:", action);
-  
-
   const token = localStorage.getItem("token");
 
   const res = await fetch(
@@ -97,8 +101,16 @@ export const saveHistory = async (
       }
     }
   );
-  console.log("TOKEN:", token);
-  return await res.json();
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(
+      data.detail || "Failed to save history"
+    );
+  }
+
+  return data;
 };
 
 export const getHistory = async () => {
@@ -113,7 +125,15 @@ export const getHistory = async () => {
     }
   );
 
-  return await res.json();
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(
+      data.detail || "Failed to retrieve history"
+    );
+  }
+
+  return data;
 };
 
 export const saveItems = async (
@@ -133,5 +153,13 @@ export const saveItems = async (
     }
   );
 
-  return await res.json();
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(
+      data.detail || "Failed to save items"
+    );
+  }
+
+  return data;
 };
