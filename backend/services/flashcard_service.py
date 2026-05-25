@@ -34,11 +34,43 @@ async def get_all_flashcards(current_user: str):
 
 
 async def create_flashcard_set(data, current_user: str):
+    
+    # Validate title
+    if not data.title.strip():
+      raise HTTPException(
+          status_code=400,
+          detail="Title cannot be empty"
+      )
+
+    # Validate description
+    if not data.description.strip():
+      raise HTTPException(
+          status_code=400,
+          detail="Description cannot be empty"
+      )
+
+
+
+    # Validate cards exist
     if len(data.terms) == 0:
-        raise HTTPException(
-            status_code=400,
-            detail="A flashcard set must contain at least one card"
-        )
+      raise HTTPException(
+          status_code=400,
+          detail="A flashcard set must contain at least one card"
+      )
+
+    # Validate every card
+    for card in data.terms:
+      if not card.term.strip():
+          raise HTTPException(
+              status_code=400,
+              detail="Card term cannot be empty"
+          )
+
+      if not card.definition.strip():
+          raise HTTPException(
+              status_code=400,
+              detail="Card definition cannot be empty"
+          )
 
     try:
         new_set = {
@@ -101,11 +133,41 @@ async def update_flashcard_set(
     data,
     current_user: str
 ):
+    
+    # Validate title
+    if not data.title.strip():
+      raise HTTPException(
+          status_code=400,
+          detail="Title cannot be empty"
+      )
+
+    # Validate description
+    if not data.description.strip():
+      raise HTTPException(
+          status_code=400,
+          detail="Description cannot be empty"
+      )
+    
+    # Validate cards exist
     if len(data.terms) == 0:
-        raise HTTPException(
-            status_code=400,
-            detail="A flashcard set must contain at least one card"
-        )
+      raise HTTPException(
+          status_code=400,
+          detail="A flashcard set must contain at least one card"
+      )
+
+    # Validate every card
+    for card in data.terms:
+      if not card.term.strip():
+          raise HTTPException(
+              status_code=400,
+              detail="Card term cannot be empty"
+          )
+
+      if not card.definition.strip():
+          raise HTTPException(
+              status_code=400,
+              detail="Card definition cannot be empty"
+          )
 
     try:
         result = await sets_collection.update_one(

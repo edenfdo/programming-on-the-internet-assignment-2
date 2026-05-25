@@ -27,7 +27,7 @@ function StudyPage({
           ← Back
         </button>
 
-        <div classname="title">
+        <div className="pagetitle">
           Study Flashcards
         </div>
       </div>

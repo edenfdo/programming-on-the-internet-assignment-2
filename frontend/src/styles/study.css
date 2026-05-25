@@ -211,8 +211,12 @@
 
 .set-card-title {
   margin: 0;
-
+  font-family: "Spline Sans";
+  font-weight: 450;
+  
+  color: black;;
   font-size: 2.5rem;
+  
 
   /* color: var(--titletext); */
 }
@@ -220,8 +224,21 @@
 .set-card-description {
   margin: 0.75rem 0 2rem;
 
-  color: var(--subheading);
+  color: black;
 
   font-size: 1rem;
   font-family: "Spline Sans";
+}
+
+.empty-set-message{
+  font-family: "Spline Sans";
+  color: black;
+}
+
+.pagetitle{
+  font-family: "Spline Sans";
+  font-weight: 450;
+  font-size: 3.5rem;
+  
+  color: var(--subheading)
 }

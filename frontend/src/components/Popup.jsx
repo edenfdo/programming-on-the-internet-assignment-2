@@ -10,9 +10,9 @@ function Popup({
   return (
     <div className="popup-overlay">
       <div className="popup-box">
-        <h2>{title}</h2>
+        <div className="popup-box-title">{title}</div>
 
-        <p>{message}</p>
+        <div className="popup-box-message">{message}</div>
 
         <button
           className="popup-close"

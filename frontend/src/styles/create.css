@@ -96,7 +96,7 @@ input, textarea {
   margin-bottom: 15px;
 }
 
-.back-button {
+/* .back-button {
   background-color: #ecc75d;
   color: white;
   border: none;
@@ -104,7 +104,7 @@ input, textarea {
   height: 35px;
   border-radius: 8px;
   cursor: pointer;
-}
+} */
 
 .done-button {
   background-color: #346471; /* Darker blue button */
@@ -176,7 +176,7 @@ input, textarea {
 .back-button {
   background: rgba(255,255,255,0.15);
   border: none;
-  color: rgb(0, 0, 0);
+  color: var(--subheading);
   padding: 12px 20px;
   border-radius: 12px;
   cursor: pointer;
@@ -198,7 +198,7 @@ input, textarea {
 }
 
 .dark.manage-page {
-  background: #0f172a;
+  background: #000000;
   color: white;
 }
 
@@ -303,7 +303,7 @@ input, textarea {
 
 .form-section:first-child input,
 .form-section:first-child textarea {
-  background: var(--mainlight);
+  background: #c0d5db;
 
 
   border-radius: 16px;

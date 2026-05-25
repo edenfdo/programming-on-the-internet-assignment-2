@@ -219,11 +219,11 @@ function LandingPage({
       {!loggedIn && authMode && (
       <div className="auth-sidebar">
 
-          <h2>
+          <div className="auth-sidebar-title">
             {authMode === "register"
               ? "Create Account"
               : "Login"}
-          </h2>
+          </div>
 
           <input
             type="text"

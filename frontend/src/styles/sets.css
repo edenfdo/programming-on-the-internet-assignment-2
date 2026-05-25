@@ -48,7 +48,7 @@
 .set-card h2 {
   margin: 0 0 0.75rem;
 
-  color: var(--titletext);
+  color: black;
 
   font-size: 1.4rem;
 }
@@ -56,9 +56,10 @@
 .set-card p {
   margin-bottom: 1rem;
 
-  color: var(--subheading);
+  color: black;
 
   line-height: 1.5;
+  font-family: "Spline Sans";
 }
 
 .set-card span {

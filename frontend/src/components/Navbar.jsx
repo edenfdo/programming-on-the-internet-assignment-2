@@ -46,10 +46,12 @@ function Navbar({
         </button>
       )}
       <button
-        className="theme-toggle"
+        className={`theme-toggle ${darkMode ? "active" : ""}`}
         onClick={() => setDarkMode(!darkMode)}
       >
-        {darkMode ? "☀" : "☾"}
+        <span className="toggle-thumb">
+          {darkMode ? "☀" : "☾"}
+        </span>
       </button>
       
     </div>

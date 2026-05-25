@@ -44,17 +44,17 @@ function CardStack({
   if (!hasCards) {
     return (
       <div className="set-card-stack">
-        <h1 className="set-card-title">
+        <div className="set-card-title">
           {title}
-        </h1>
+        </div>
 
-        <p className="set-card-description">
+        <div className="set-card-description">
           {description}
-        </p>
+        </div>
 
-        <p className="empty-set-message">
+        <div className="empty-set-message">
           No flashcards available.
-        </p>
+        </div>
       </div>
     );
   }
@@ -62,13 +62,13 @@ function CardStack({
   return (
     <div className="set-card-stack">
 
-      <h1 className="set-card-title">
+      <div className="set-card-title">
         {title}
-      </h1>
+      </div>
 
-      <p className="set-card-description">
+      <div className="set-card-description">
         {description}
-      </p>
+      </div>
 
       <div className="study-card-container">
 

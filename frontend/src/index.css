@@ -1,6 +1,6 @@
 :root {
   --titletext:rgb(28, 28, 28);
-  --subheading: #00000080;
+  --subheading: #000000;
   --bg: #fff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
@@ -25,7 +25,7 @@ body.dark {
 
   --bg: #121212;
   --titletext: white;
-  --subheading: rgba(255, 255, 255, 0.7);
+  --subheading:white ;
 
   --border: #333;
   --code-bg: #1e1e1e;
@@ -37,13 +37,6 @@ body {
   margin: 0;
 }
 
-.title{
-  font-family: "Spline Sans";
-  font-weight: 450;
-  
-  color: var(--subheading)
-}
-
 
 h1,
 h2 {
@@ -53,6 +46,8 @@ h2 {
   color: var(--subheading)
 
 }
+
+
 
 h1 {
   font-size: 56px;
