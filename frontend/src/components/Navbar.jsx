@@ -6,9 +6,9 @@ function Navbar({
   darkMode,
   setDarkMode
 }) {
-  console.log("darkMode =", darkMode);
   return (
     <div className="landing-navbar">
+      {/* If the user is not logged in, show Login + Register buttons. */}
       {!loggedIn ? (
         <>
           <button

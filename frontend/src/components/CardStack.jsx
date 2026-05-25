@@ -8,6 +8,8 @@ function CardStack({
 }) {
   // State variables
 
+  
+
   // Currently displayed card
   const [currentIndex, setCurrentIndex] =
     useState(startIndex);
@@ -20,9 +22,12 @@ function CardStack({
   const hasCards =
     terms && terms.length > 0;
 
-  // If cards exist pick the card at currentIndex
+  const safeIndex = hasCards
+    ? Math.min(currentIndex, terms.length - 1)
+    : 0;
+
   const currentCard = hasCards
-    ? terms[currentIndex]
+    ? terms[safeIndex]
     : null;
 
   // Navigation functions
@@ -63,6 +68,9 @@ function CardStack({
       </div>
     );
   }
+
+  console.log("CardStack startIndex:", startIndex);
+  console.log("currentIndex:", currentIndex);
 
   return (
     <div className="set-card-stack">
@@ -123,7 +131,7 @@ function CardStack({
         
         {/* Stack count */}
         <span className="stack-counter">
-          {currentIndex + 1} /{" "}
+          {safeIndex + 1} /{" "}
           {terms.length}
         </span>
         

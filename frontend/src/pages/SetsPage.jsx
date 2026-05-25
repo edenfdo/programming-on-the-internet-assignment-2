@@ -22,7 +22,7 @@ function SetsPage({
       </div>
 
       {savedSets.length === 0 ? (
-        <p>No flashcard sets yet.</p>
+        <div className = "no-sets">No flashcard sets yet.</div>
       ) : (
         <div className="sets-grid">
 

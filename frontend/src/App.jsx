@@ -437,6 +437,7 @@ function App() {
       setSelectedStudySetId={setSelectedStudySetId}
       setCurrentView={setCurrentView}
       recordHistory={recordHistory}
+      setSelectedCardIndex={setSelectedCardIndex}
     />
   ) : currentView === "manage" ? (
     <CreateSetPage
@@ -487,7 +488,8 @@ function App() {
   );
 
   
-
+  console.log("selectedCardIndex =", selectedCardIndex);
+  console.log("selectedStudySetId =", selectedStudySetId);
   return (
     <>
       <Popup

@@ -62,7 +62,9 @@ function LandingPage({
     setAuthMode("login");
     return;
   };
+  setSelectedCardIndex(0);
   setCurrentView("study");
+  
 }
 
   const handleSetsClick = () => {

@@ -2,9 +2,6 @@ import FlashcardForm from "../components/FlashcardForm";
 import "../styles/create.css";
 
 function CreateSetPage(props) {
-
-  console.log("showPopup:", props.showPopup);
-  console.log("popupTitle:", props.popupTitle);
   return (
     <div
       className={`manage-page ${

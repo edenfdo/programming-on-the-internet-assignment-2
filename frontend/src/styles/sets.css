@@ -144,3 +144,7 @@
 .empty-sets p {
   color: var(--subheading);
 }
+
+.no-sets {
+  font-family: "Spline Sans";
+}

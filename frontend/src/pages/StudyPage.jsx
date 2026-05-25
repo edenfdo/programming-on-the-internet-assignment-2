@@ -5,15 +5,29 @@ function StudyPage({
   savedSets,
   selectedStudySetId,
   selectedCardIndex,
+  setSelectedCardIndex,
   setSelectedStudySetId,
   setCurrentView,
   recordHistory
 }) {
+
   const selectedSet = savedSets.find(
     (set) => String(set.id) === selectedStudySetId
   );
 
+  const safeIndex = selectedSet
+    ? Math.min(
+        selectedCardIndex,
+        selectedSet.terms.length - 1
+      )
+    : 0;
+
+  console.log(
+    "StudyPage received index:",
+    selectedCardIndex
+  );
   return (
+    
     <div className="study-page">
 
       <div className="study-header">
@@ -21,6 +35,7 @@ function StudyPage({
           className="back-button"
           onClick={() => {
             setSelectedStudySetId("");
+            setSelectedCardIndex(0);
             setCurrentView("landing");
           }}
         >
@@ -40,6 +55,9 @@ function StudyPage({
             const selectedId = e.target.value;
 
             setSelectedStudySetId(selectedId);
+
+            // Always start from card 1 when opening a set
+            setSelectedCardIndex(0);
 
             const selectedSet = savedSets.find(
               (set) => String(set.id) === selectedId
@@ -71,10 +89,11 @@ function StudyPage({
       {selectedSet && (
         <div className="study-card-container">
           <CardStack
+            key={selectedStudySetId}
             title={selectedSet.title}
             description={selectedSet.description}
             terms={selectedSet.terms}
-            startIndex={selectedCardIndex}
+            startIndex={safeIndex}
           />
         </div>
       )}
