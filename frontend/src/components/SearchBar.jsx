@@ -4,12 +4,14 @@ function SearchBar({
   placeholder = "Search all flashcards..."
 }) {
   return (
+    // Search input
     <div className="global-search-container">
       <input
         type="text"
         className="global-search-input"
         placeholder={placeholder}
         value={value}
+        // runs whenever the user types.
         onChange={(e) => onChange(e.target.value)}
       />
     </div>

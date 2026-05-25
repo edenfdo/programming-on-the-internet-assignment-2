@@ -1,4 +1,7 @@
+// imports history card componenet
 import HistoryCard from "../components/HistoryCard";
+
+// imports css file
 import "../styles/admin.css";
 
 function AdminPage({
@@ -11,6 +14,7 @@ function AdminPage({
   return (
     <div className="admin-page">
 
+      {/* Back button */}
       <button
         className="back-button"
         onClick={() =>
@@ -19,10 +23,13 @@ function AdminPage({
       >
         ← Back
       </button>
-
+      
+      {/* Page Title */}
       <h1>Activity History</h1>
-
+      
+      {/* Container for the list of history cards */}
       <div className="history-grid">
+        {/* Loops from history array */}
         {history.map((item) => (
           <HistoryCard
             key={item.id}

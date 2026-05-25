@@ -11,6 +11,7 @@ function Navbar({
       {/* If the user is not logged in, show Login + Register buttons. */}
       {!loggedIn ? (
         <>
+          {/* Login button */}
           <button
             className="nav-button"
             onClick={() =>
@@ -23,7 +24,8 @@ function Navbar({
           >
             Login
           </button>
-
+          
+          {/* Register button */}
           <button
             className="nav-button register"
             onClick={() =>
@@ -45,6 +47,8 @@ function Navbar({
           Logout
         </button>
       )}
+
+      {/* Dark mode toggle */}
       <button
         className={`theme-toggle ${darkMode ? "active" : ""}`}
         onClick={() => setDarkMode(!darkMode)}

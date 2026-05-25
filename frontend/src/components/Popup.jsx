@@ -10,10 +10,13 @@ function Popup({
   return (
     <div className="popup-overlay">
       <div className="popup-box">
+        {/* Popup title */}
         <div className="popup-box-title">{title}</div>
 
+        {/* Popup message */}
         <div className="popup-box-message">{message}</div>
 
+        {/* Button to close popup */}
         <button
           className="popup-close"
           onClick={onClose}

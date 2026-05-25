@@ -1,4 +1,7 @@
+// imports card stack componenet
 import CardStack from "../components/CardStack";
+
+// imports css file
 import "../styles/study.css";
 
 function StudyPage({
@@ -11,6 +14,7 @@ function StudyPage({
   recordHistory
 }) {
 
+  // finds selected set
   const selectedSet = savedSets.find(
     (set) => String(set.id) === selectedStudySetId
   );
@@ -28,6 +32,8 @@ function StudyPage({
     <div className="study-page">
 
       <div className="study-header">
+
+        {/* Back buttion */}
         <button
           className="back-button"
           onClick={() => {
@@ -38,13 +44,15 @@ function StudyPage({
         >
           ← Back
         </button>
-
+        
+        {/* Page title */}
         <div className="pagetitle">
           Study Flashcards
         </div>
       </div>
 
       <div className="study-selector-container">
+        {/* Dropdown */}
         <select
           className="study-dropdown"
           value={selectedStudySetId}
@@ -68,6 +76,7 @@ function StudyPage({
             }
           }}
         >
+          {/* Dropdown options */}
           <option value="">
             Select a flashcard set
           </option>
@@ -85,6 +94,7 @@ function StudyPage({
 
       {selectedSet && (
         <div className="study-card-container">
+          {/* Renders card stack component */}
           <CardStack
             key={selectedStudySetId}
             title={selectedSet.title}

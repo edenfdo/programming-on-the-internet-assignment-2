@@ -1,4 +1,7 @@
+// imports flashcard form componenet
 import FlashcardForm from "../components/FlashcardForm";
+
+// imports css file
 import "../styles/create.css";
 
 function CreateSetPage(props) {
@@ -11,6 +14,7 @@ function CreateSetPage(props) {
     
 
       <header className="manage-header">
+        {/* Back button */}
         <button
           className="back-button"
           onClick={() =>
@@ -19,10 +23,13 @@ function CreateSetPage(props) {
         >
           ← Back
         </button>
+
+        {/* Page Title */}
         <h1>Create Flashcard Set</h1>
       </header>
 
       <main className="manage-container">
+        {/* Renders flashcard component */}
         <FlashcardForm
           title={props.title}
           setTitle={props.setTitle}
