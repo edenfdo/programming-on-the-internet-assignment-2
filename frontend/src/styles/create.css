@@ -1,3 +1,4 @@
+/* Page structure */
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -22,7 +23,7 @@
   margin-top: 5px;
 }
 
-/* 2. The Blue Form Container */
+/* Form container */
 .form-container {
   width: 100%;
   max-width: 90%;
@@ -39,7 +40,7 @@
   /* transform: translateY(-30vh); */
   margin-bottom: -15vh;
 }
-/* 3. Labels and Grids */
+/* Labels and grids */
 .input-label {
   color: white;
   font-weight: bold;
@@ -62,7 +63,7 @@
   margin-bottom: 20px;
 }
 
-/* 4. Inputs */
+/* Inputs */
 input, textarea {
   border: none;
   border-radius: 10px;
@@ -83,7 +84,7 @@ input, textarea {
   font-weight: bold;
 }
 
-/* 5. Buttons Positioning */
+/* Buttons */
 .add-term-button {
   background-color: #ecc75d;
   color: white;
@@ -95,16 +96,6 @@ input, textarea {
   cursor: pointer;
   margin-bottom: 15px;
 }
-
-/* .back-button {
-  background-color: #ecc75d;
-  color: white;
-  border: none;
-  width: 60px;
-  height: 35px;
-  border-radius: 8px;
-  cursor: pointer;
-} */
 
 .done-button {
   background-color: #346471; /* Darker blue button */
@@ -118,21 +109,18 @@ input, textarea {
   cursor: pointer;
 }
 
-/* 6. Dark Mode Override for Blue Box */
+/* Dark Mode */
 .dark .form-container {
-  background-color: #2c4d57; /* Muted blue for dark mode */
+  background-color: #2c4d57; 
 }
-
 
 .toggle-wrapper {
   position: fixed;
-  top: 20px; /* Changed from -260px */
+  top: 20px; 
   right: 20px;
   cursor: pointer;
   z-index: 999999;
 }
-
-
 
 .toggle-switch {
   width: 55px;
@@ -164,7 +152,6 @@ input, textarea {
 .toggle-switch.on .toggle-circle {
   transform: translateX(27px);
 }
-
 
 .manage-topbar {
   width: 100%;
@@ -217,10 +204,7 @@ input, textarea {
   transition: 0.2s;
 }
 
-.back-btn:hover {
-  color: #2563eb;
-  transform: translateX(-3px);
-}
+
 
 .manage-container {
   display: flex;
@@ -241,30 +225,6 @@ input, textarea {
 .dark .manage-card {
   background: #1e293b;
 }
-
-.manage-title-section {
-  margin-bottom: 2.5rem;
-}
-
-.manage-badge {
-  display: inline-block;
-  padding: 0.35rem 0.8rem;
-  border-radius: 999px;
-  background: var(--mainlight);
-  color: var(--highlight);
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  font-family: "Spline Sans";
-}
-
-.dark .manage-badge {
-  background: rgba(59, 130, 246, 0.15);
-}
-
-
-
-
 
 
 .manage-title-section h1 {
@@ -299,8 +259,6 @@ input, textarea {
   
 }
 
-/* Deck Information */
-
 .form-section:first-child input,
 .form-section:first-child textarea {
   background: #c0d5db;
@@ -313,9 +271,7 @@ input, textarea {
 .form-section:first-child input:focus,
 .form-section:first-child textarea:focus {
   background: #c0d5db;
-
   border-color: var(--main);
-
   outline: none;
 }
 
@@ -326,42 +282,32 @@ input, textarea {
   flex-direction: column;
   gap: 0.6rem;
   margin-bottom: 1.5rem;
-  
+
 }
 
 .field label {
   font-family: "Spline Sans";
   font-weight: 500;
   color: var(--titletext);
-  
 }
 
 .input-panel input,
 .input-panel textarea {
   width: 100%;
-
   background: white;
-
   border: 2px solid var(--border);
-
   border-radius: 12px;
-
   padding: 0.85rem 1rem;
-
   font-size: 1rem;
-
   box-sizing: border-box;
-
   transition: 0.2s ease;
-  
+
 }
 
 .input-panel input:focus,
 .input-panel textarea:focus {
   outline: none;
-
   border-color: var(--main);
-
   box-shadow:
     0 0 0 4px rgba(86, 159, 179, 0.15);
 }
@@ -379,10 +325,8 @@ input, textarea {
 .field input:focus,
 .field textarea:focus {
   outline: none;
-
   border-color: var(--main);
   background: white;
-
   box-shadow: 0 0 0 4px rgba(86, 159, 179, 0.15);
 }
 
@@ -391,7 +335,6 @@ input, textarea {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   margin-bottom: 1.5rem;
 }
 
@@ -403,15 +346,10 @@ input, textarea {
 .term-card {
   background: var(--mainlight);
   padding: 2rem;
-
   border-radius: 20px;
-
   padding: 1.5rem;
-
   margin-bottom: 1rem;
-
   border: 2px solid transparent;
-
   transition: 0.2s ease;
 }
 
@@ -431,17 +369,12 @@ input, textarea {
   font-size: 1.05rem;
 }
 
-
-
 .delete-btn {
   border: none;
   background: var(--yellow);
-
   color: black;
-
   font-weight: 600;
   cursor: pointer;
-
   transition: 0.2s ease;
 }
 
@@ -449,26 +382,16 @@ input, textarea {
   transform: translateY(-1px);
 }
 
-
-
 .add-card-btn {
   width: 100%;
-
   padding: 1rem;
-
   border-radius: 18px;
-
   border: 2px dashed var(--main);
-
   background: transparent;
-
   color: var(--highlight);
-
   font-family: "Spline Sans";
   font-weight: 600;
-
   cursor: pointer;
-
   transition: 0.2s ease;
 }
 
@@ -477,28 +400,18 @@ input, textarea {
 }
 
 
-
 .save-btn {
   border: none;
-
   padding: 1rem 1.5rem;
-
   border-radius: 18px;
-
   background: var(--yellow);
-
   color: var(--titletext);
-
   font-family: "Spline Sans";
   font-size: 1rem;
   font-weight: 600;
-
   cursor: pointer;
-
   transition: 0.2s ease;
-
   align-self: center;
-
   min-width: 220px;
 }
 
@@ -507,20 +420,16 @@ input, textarea {
   transform: translateY(-2px);
 }
 
-
 .card-body {
   display: grid;
   grid-template-columns: 35% 65%;
   gap: 1rem;
 }
 
-
-
 .card-body .field {
   margin: 0;
   padding: 1rem;
 }
-
 
 .term-field input,
 .definition-field textarea {
@@ -528,12 +437,9 @@ input, textarea {
   border: none;
   background: transparent;
   padding: 0;
-
   font-size: 0.95rem;
   font-family: inherit;
-
   resize: none;
-  
 }
 
 .term-field input {
@@ -547,14 +453,10 @@ input, textarea {
 
 .input-panel {
   background: white;
-
   border-radius: 18px;
-
   padding: 1rem;
-
   display: flex;
   flex-direction: column;
-
   gap: 0.75rem;
   font-family: "Spline Sans";
 }

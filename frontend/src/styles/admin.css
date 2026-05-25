@@ -1,13 +1,17 @@
+/* Background  */
+
 .admin-page{
   background: var(--bg);
 }
 
+/* History grid layout */
 .history-grid {
   display: grid;
   gap: 1rem;
   margin-top: 2rem;
 }
 
+/* History card */
 .history-card {
   background: var(--accent);
   border-left: 6px solid var(--main);
@@ -22,6 +26,7 @@
   font-family: "Spline Sans";
 }
 
+/* History card hover effect */
 .history-card:hover {
   transform: translateY(-4px);
 
@@ -31,17 +36,29 @@
   border-left-color: var(--yellow);
 }
 
+/* History card h3  */
 .history-card h3 {
   margin: 0 0 12px;
   color: var(--highlight);
   font-size: 1rem;
 }
 
+/* History card title */
+.history-title {
+  color: var(--main);
+  font-family: "Spline Sans";
+  font-weight: 450;
+  
+}
+
+/* History card text */
 .history-card p {
   margin: 6px 0;
   color: var(--subheading);
 }
 
+
+/* Action colour-coded */
 .action-created {
   color: var(--yellow);
   font-weight: 700;
@@ -52,9 +69,3 @@
   font-weight: 700;
 }
 
-.history-title {
-  color: var(--main);
-  font-family: "Spline Sans";
-  font-weight: 450;
-  
-}
