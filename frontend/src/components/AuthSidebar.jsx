@@ -31,7 +31,7 @@ export default function AuthSidebar({
         onChange={(e) =>
           setPassword(e.target.value)
         }
-        // enter key handling
+        // Enter key handling
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             authMode === "register"

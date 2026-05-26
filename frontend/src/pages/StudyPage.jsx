@@ -14,7 +14,7 @@ function StudyPage({
   recordHistory
 }) {
 
-  // finds selected set
+  // Finds selected set
   const selectedSet = savedSets.find(
     (set) => String(set.id) === selectedStudySetId
   );

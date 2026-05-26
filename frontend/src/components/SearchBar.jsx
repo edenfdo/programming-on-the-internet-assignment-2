@@ -11,7 +11,7 @@ function SearchBar({
         className="global-search-input"
         placeholder={placeholder}
         value={value}
-        // runs whenever the user types.
+        // Runs whenever the user types
         onChange={(e) => onChange(e.target.value)}
       />
     </div>

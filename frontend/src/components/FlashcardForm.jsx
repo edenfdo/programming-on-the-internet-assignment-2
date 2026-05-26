@@ -26,7 +26,7 @@ function FlashcardForm({
     });
   }, [terms.length]);
 
-  // adding cards
+  // Adding cards
   const handleAddCard = () => {
     addTerm();
 

@@ -273,7 +273,7 @@ function App() {
   };
 
 
-  //Adding a new empty term row
+  // Adding a new empty term row
   const addTerm = () => {
   setTerms((prev) => [
     ...prev,
@@ -285,12 +285,12 @@ function App() {
   ]);
 };
 
-  //Deleting a term 
+  // Deleting a term 
   const deleteTerm = (indexToDelete) => {
     setTerms(terms.filter((_, i) => i !== indexToDelete));
   };
 
-  //Saving flashcard set
+  // Saving flashcard set
   const submitForm = () => {
     if (!title.trim() || !description.trim()) {
       setPopupTitle("Oops!");

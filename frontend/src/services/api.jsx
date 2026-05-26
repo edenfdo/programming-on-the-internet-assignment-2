@@ -24,7 +24,7 @@ export const loginUser = async (
     }
   );
 
-  //If the response is not ok, throw an error
+  // If the response is not ok, throw an error
   if (!res.ok) {
     throw new Error(
       "Invalid login credentials"
