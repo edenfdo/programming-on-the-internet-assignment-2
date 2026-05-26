@@ -8,7 +8,7 @@ async def save_history_service(
     action: str,
     current_user: dict
 ):
-    # stores username, flashcard set and action
+    # Stores username, flashcard set and action
     await history_collection.insert_one({
         "username": current_user["username"],
         "flashcard_set": flashcard_set,

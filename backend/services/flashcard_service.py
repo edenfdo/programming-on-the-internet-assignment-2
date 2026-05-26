@@ -44,7 +44,7 @@ async def create_flashcard_set(data, current_user: str):
           detail="Title cannot be empty"
       )
 
-    # Validats description
+    # Validates description
     if not data.description.strip():
       raise HTTPException(
           status_code=400,
@@ -67,7 +67,7 @@ async def create_flashcard_set(data, current_user: str):
                 detail="Card term cannot be empty"
             )
 
-        # Validates that the defintion is not empty
+        # Validates that the definition is not empty
         if not card.definition.strip():
             raise HTTPException(
                 status_code=400,

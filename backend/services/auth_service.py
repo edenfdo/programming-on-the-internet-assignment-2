@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta, timezone
-from enum import Enum
 from typing import Optional
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
