@@ -1,7 +1,7 @@
-// imports card stack componenet
+// Imports card stack componenet
 import CardStack from "../components/CardStack";
 
-// imports css file
+// Imports css file
 import "../styles/study.css";
 
 function StudyPage({

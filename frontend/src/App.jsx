@@ -1,7 +1,10 @@
+// Imports react hooks 
 import { useState, useEffect } from "react";
+
+// Imports css file
 import "./styles/index.css";
 
-
+// Imports all components and pages
 import LandingPage from "./pages/LandingPage";
 import StudyPage from "./pages/StudyPage";
 import CreateSetPage from "./pages/CreateSetPage";
@@ -19,56 +22,63 @@ import {
 
 function App() {
   
+  // Stores the flashcard set currently being created or edited
   const [terms, setTerms] = useState([]);
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  // Stores the popup used for notifications
   const [popupTitle, setPopupTitle] = useState("");
   const [popupMessage, setPopupMessage] = useState("");
   const [popupButtonText, setPopupButtonText] = useState("Close");
   const [showPopup, setShowPopup] = useState(false);
 
+  // Stores darkMode state
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem("darkMode");
     return saved === "true";
   });
 
+  // Stores navigation state
   const [currentView, setCurrentView] = useState("landing");
 
+  // Stores which set is being studied and which card is active
   const [selectedStudySetId, setSelectedStudySetId] = useState("");
-
   const [selectedCardIndex, setSelectedCardIndex] =
     useState(0);
 
-  
-
+  // Stores authentification state
   const [loggedIn, setLoggedIn] = useState(
     !!localStorage.getItem("token")
   );
-
-// Tracks whether the user is viewing the Login or Register form
-  
-
   const [authMode, setAuthMode] = useState(null);
 
+  // Login and register form fields
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Array to hold all saved flashcard sets fetched from MongoDB
+  // Stores all flashcard sets fetched from the backend
   const [savedSets, setSavedSets] = useState([]);
-
   const [history, setHistory] = useState([]);
+
+  // Stores whether the user is an admin
   const [isAdmin, setIsAdmin] = useState(
     localStorage.getItem("role") === "admin"
   );
 
+  // Stores the global search query
+  const [globalSearch, setGlobalSearch] = useState("");
+
+  // Stores which set is being edited
+  const [editingSetId, setEditingSetId] =
+    useState(null);
+
+  // Removes empty or incomplete cards before saving
   const cleanedTerms = terms.filter(
     t => t.term.trim() && t.definition.trim()
   );
 
-  const [globalSearch, setGlobalSearch] = useState("");
-
+  // When opening create set page
   const openCreateSet = () => {
     setTitle("");
     setDescription("");
@@ -77,10 +87,8 @@ function App() {
 
     setCurrentView("manage");
   };
-
-  const [editingSetId, setEditingSetId] =
-    useState(null);
-
+  
+  // When editing a set
   const startEditingSet = (set) => {
     setEditingSetId(set.id);
 
@@ -91,6 +99,7 @@ function App() {
     setCurrentView("manage");
   };
 
+  // Deleting a flashcard set
   const deleteSet = async (id, title) => {
     try {
       await fetch(
@@ -116,6 +125,7 @@ function App() {
     }
   };
 
+  // Search 
   const searchResults = globalSearch.trim()
   ? savedSets.flatMap((set) =>
       (set.terms || [])
@@ -138,6 +148,7 @@ function App() {
     )
   : [];
 
+  // Login 
   const login = async () => {
     try {
       const data = await loginUser(email, password);
@@ -163,46 +174,8 @@ function App() {
       setShowPopup(true);
     }
   };
-  const loadHistory = async () => {
-    try {
 
-      const data = await getHistory();
-
-      setHistory(data);
-      setCurrentView("admin");
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  
-  const fetchExistingItems = async () => {
-    try {
-
-      const data = await getItems();
-
-      if (Array.isArray(data)) {
-        setSavedSets(data);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const recordHistory = async (
-    flashcardSet,
-    action
-  ) => {
-    try {
-      await saveHistory(
-        flashcardSet,
-        action
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-
+  // Registering 
   const register = async () => {
     if (email.length < 3 || password.length < 4) {
       setPopupTitle("Invalid Details");
@@ -244,6 +217,50 @@ function App() {
     setAuthMode("login");
   };
 
+  // Loading history for admin users
+  const loadHistory = async () => {
+    try {
+
+      const data = await getHistory();
+
+      setHistory(data);
+      setCurrentView("admin");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  
+  // Fetching flashcard sets 
+  const fetchExistingItems = async () => {
+    try {
+
+      const data = await getItems();
+
+      if (Array.isArray(data)) {
+        setSavedSets(data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Recording history 
+  const recordHistory = async (
+    flashcardSet,
+    action
+  ) => {
+    try {
+      await saveHistory(
+        flashcardSet,
+        action
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  
+  // Logout
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
@@ -256,7 +273,7 @@ function App() {
   };
 
 
-  //add a new empty term row
+  //Adding a new empty term row
   const addTerm = () => {
   setTerms((prev) => [
     ...prev,
@@ -268,12 +285,12 @@ function App() {
   ]);
 };
 
-  //delete a term by index
+  //Deleting a term 
   const deleteTerm = (indexToDelete) => {
     setTerms(terms.filter((_, i) => i !== indexToDelete));
   };
 
-  //save flashcard set
+  //Saving flashcard set
   const submitForm = () => {
     if (!title.trim() || !description.trim()) {
       setPopupTitle("Oops!");
@@ -294,7 +311,6 @@ function App() {
       return;
     }
 
-    // Cards exist but some are incomplete
     const incompleteCards = terms.some(
       t =>
         !t.term.trim() ||
@@ -366,7 +382,6 @@ function App() {
         setTerms([]);
 
         fetchExistingItems();
-        //setCurrentView("mysets");
       })
       .catch((err) =>
         console.error(
@@ -376,7 +391,7 @@ function App() {
       );
   };
 
-  // load existing set from backend
+  // Loading existing set from backend
   useEffect(() => {
     if (loggedIn) {
       fetchExistingItems();
@@ -385,7 +400,7 @@ function App() {
 
   
 
-  //dark mode
+  // Dark Mode
   useEffect(() => {
     localStorage.setItem("darkMode", darkMode);
     document.body.classList.toggle("dark", darkMode);
@@ -393,6 +408,7 @@ function App() {
 
   const currentPage =
   currentView === "landing" ? (
+    // Landing page props
     <LandingPage
       loggedIn={loggedIn}
       
@@ -406,8 +422,6 @@ function App() {
       globalSearch={globalSearch}
       setGlobalSearch={setGlobalSearch}
       searchResults={searchResults}
-      // showLoginPrompt={showLoginPrompt}
-      // setShowLoginPrompt={setShowLoginPrompt}
       setCurrentView={setCurrentView}
       isAdmin={isAdmin}
       loadHistory={loadHistory}
@@ -430,6 +444,7 @@ function App() {
       openCreateSet={openCreateSet}
     />
   ) : currentView === "study" ? (
+    // Study page props
     <StudyPage
       savedSets={savedSets}
       selectedStudySetId={selectedStudySetId}
@@ -440,37 +455,31 @@ function App() {
       setSelectedCardIndex={setSelectedCardIndex}
     />
   ) : currentView === "manage" ? (
+    // Create set page props
     <CreateSetPage
       darkMode={darkMode}
       setDarkMode={setDarkMode}
-
       setCurrentView={setCurrentView}
-
       title={title}
       setTitle={setTitle}
-
       description={description}
       setDescription={setDescription}
-
       terms={terms}
       setTerms={setTerms}
-
       addTerm={addTerm}
       deleteTerm={deleteTerm}
       submitForm={submitForm}
-
       showPopup={showPopup}
       popupMessage={popupMessage}
       setShowPopup={setShowPopup}
       popupTitle={popupTitle}
       popupButtonText={popupButtonText}
-
       logout={logout}
-
       editingSetId={editingSetId}
       setEditingSetId={setEditingSetId}
     />
   ) : currentView === "mysets" ? (
+    // Sets page props
     <SetsPage
       savedSets={savedSets}
       setCurrentView={setCurrentView}
@@ -482,16 +491,16 @@ function App() {
       recordHistory={recordHistory}
     />
   ) : (
+    // Admin page props
     <AdminPage
       history={history}
       setCurrentView={setCurrentView}
     />
   );
-
-  
   
   return (
     <>
+      {/* Rendering popup and current view */}
       <Popup
         show={showPopup}
         title={popupTitle}

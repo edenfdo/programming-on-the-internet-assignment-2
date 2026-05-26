@@ -2,12 +2,13 @@ from fastapi import HTTPException
 
 from models.database import history_collection
 
-
+# Saving a history entry
 async def save_history_service(
     flashcard_set: str,
     action: str,
     current_user: dict
 ):
+    # stores username, flashcard set and action
     await history_collection.insert_one({
         "username": current_user["username"],
         "flashcard_set": flashcard_set,
@@ -16,10 +17,11 @@ async def save_history_service(
 
     return {"message": "History saved"}
 
-
+# Retrieving all history entries
 async def view_history_service(
     current_user: dict
 ):
+    # Checks if the user is an admin, if not denies access
     if current_user["role"] != "admin":
         raise HTTPException(
             status_code=403,
@@ -33,6 +35,7 @@ async def view_history_service(
         .to_list(None)
     )
 
+    # Formatting output
     return [
         {
             "id": str(item["_id"]),

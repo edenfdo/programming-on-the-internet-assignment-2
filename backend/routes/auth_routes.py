@@ -1,9 +1,6 @@
 from datetime import timedelta
-
 from fastapi import APIRouter, Depends, HTTPException
-
 from models.database import users_collection
-
 from fastapi.security import OAuth2PasswordRequestForm
 from schemas.user_schema import UserRegister
 

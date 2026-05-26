@@ -23,6 +23,22 @@
   margin-top: 5px;
 }
 
+.manage-page {
+  min-height: 100vh;
+  
+  padding: 2rem;
+}
+
+.dark.manage-page {
+  background: #000000;
+  color: white;
+}
+
+.manage-header {
+  max-width: 1000px;
+  margin: 0 auto 2rem;
+}
+
 /* Form container */
 .form-container {
   width: 100%;
@@ -109,6 +125,33 @@ input, textarea {
   cursor: pointer;
 }
 
+.back-button {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: var(--subheading);
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+  transition: 0.2s ease;
+}
+
+.back-btn {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #64748b;
+  transition: 0.2s;
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.25);
+}
+
 /* Dark Mode */
 .dark .form-container {
   background-color: #2c4d57; 
@@ -153,58 +196,13 @@ input, textarea {
   transform: translateX(27px);
 }
 
+/* General padding */
 .manage-topbar {
   width: 100%;
   display: flex;
   justify-content: flex-start;
   margin-bottom: 20px;
 }
-
-.back-button {
-  background: rgba(255,255,255,0.15);
-  border: none;
-  color: var(--subheading);
-  padding: 12px 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 700;
-  backdrop-filter: blur(10px);
-  transition: 0.2s ease;
-}
-
-
-.back-button:hover {
-  transform: translateY(-2px);
-  background: rgba(255,255,255,0.25);
-}
-
-.manage-page {
-  min-height: 100vh;
-  
-  padding: 2rem;
-}
-
-.dark.manage-page {
-  background: #000000;
-  color: white;
-}
-
-.manage-header {
-  max-width: 1000px;
-  margin: 0 auto 2rem;
-}
-
-.back-btn {
-  border: none;
-  background: transparent;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  color: #64748b;
-  transition: 0.2s;
-}
-
-
 
 .manage-container {
   display: flex;
@@ -245,6 +243,7 @@ input, textarea {
   color: #94a3b8;
 }
 
+/* Form */
 .flashcard-form {
   display: flex;
   flex-direction: column;
@@ -274,7 +273,6 @@ input, textarea {
   border-color: var(--main);
   outline: none;
 }
-
 
 
 .field {

@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends
-
 from services.auth_service import get_current_user
 from services.history_service import (
     save_history_service,

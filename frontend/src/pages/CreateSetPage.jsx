@@ -1,7 +1,7 @@
-// imports flashcard form componenet
+// Imports flashcard form componenet
 import FlashcardForm from "../components/FlashcardForm";
 
-// imports css file
+// Imports css file
 import "../styles/create.css";
 
 function CreateSetPage(props) {
@@ -11,8 +11,7 @@ function CreateSetPage(props) {
         props.darkMode ? "dark" : ""
       }`}
     >
-    
-
+  
       <header className="manage-header">
         {/* Back button */}
         <button

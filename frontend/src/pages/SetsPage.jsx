@@ -1,4 +1,4 @@
-// imports css file
+// Imports css file
 import "../styles/sets.css";
 
 function SetsPage({

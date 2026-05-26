@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
-
 from schemas.flashcard_schema import FlashcardSet
+from services.auth_service import get_current_user
+
 
 from services.flashcard_service import (
     get_all_flashcards,
@@ -8,8 +9,6 @@ from services.flashcard_service import (
     delete_flashcard_set,
     update_flashcard_set
 )
-
-from services.auth_service import get_current_user
 
 # Router initialisation
 router = APIRouter()

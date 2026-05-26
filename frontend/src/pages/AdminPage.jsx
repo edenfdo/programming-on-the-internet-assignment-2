@@ -1,7 +1,7 @@
-// imports history card componenet
+// Imports history card componenet
 import HistoryCard from "../components/HistoryCard";
 
-// imports css file
+// Imports css file
 import "../styles/admin.css";
 
 function AdminPage({

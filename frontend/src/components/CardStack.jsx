@@ -8,8 +8,6 @@ function CardStack({
 }) {
   // State variables
 
-  
-
   // Currently displayed card
   const [currentIndex, setCurrentIndex] =
     useState(startIndex);

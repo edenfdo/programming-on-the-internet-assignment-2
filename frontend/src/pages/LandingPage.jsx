@@ -1,10 +1,10 @@
-// imports navbar componenet
+// Imports navbar componenet
 import Navbar from "../components/Navbar";
 
-// imports search bar componenet
+// Imports search bar componenet
 import SearchBar from "../components/SearchBar";
 
-// imports css file
+// Imports css file
 import "../styles/landing.css";
 
 function LandingPage({
@@ -34,8 +34,6 @@ function LandingPage({
   darkMode,
   setDarkMode,
   openCreateSet
-
-  
 }) {
 
   // When the user clicks "Create Set"
@@ -94,9 +92,6 @@ function LandingPage({
     setCurrentView("mysets");
   };
 
-
-  
-
   return (
     <div className="landing-page">
 
@@ -110,7 +105,6 @@ function LandingPage({
         setDarkMode={setDarkMode}
       />
 
-    
       <div className="landing-content">
 
         {/* Website Title */}

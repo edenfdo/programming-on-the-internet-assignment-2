@@ -1,7 +1,5 @@
 import { useRef, useEffect } from "react";
 
-
-
 function FlashcardForm({
   title,
   setTitle,

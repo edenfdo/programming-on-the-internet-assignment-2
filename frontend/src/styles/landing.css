@@ -1,3 +1,4 @@
+/* Page structure */
 .landing-page {
   min-height: 100vh;
   position: relative;
@@ -15,6 +16,7 @@
   z-index: 2;
 }
 
+/* Titles */
 .landing-title {
   font-size: 6rem;
   font-weight: 800;
@@ -34,6 +36,7 @@
   font-family: "Spline Sans";
 }
 
+/* Buttons */
 .landing-buttons {
   display: flex;
   gap: 20px;
@@ -94,7 +97,7 @@
 }
 
 
-
+/* Navbar */
 .landing-navbar {
   position: absolute;
   top: 24px;
@@ -120,6 +123,7 @@
   color: white;
 }
 
+/* Sidebar */
 .auth-sidebar {
   position: absolute;
   right: 30px;
@@ -175,35 +179,8 @@
   
   background: var(--highlight);
 }
-  
 
-.login-warning-overlay {
-  position: absolute;
-  top: 120px;
-  right: 360px;
-  z-index: 50;
-}
-
-.login-warning-popup {
-  background: var(--highlight);
-  color: white;
-  padding: 18px 24px;
-  border-radius: 16px;
-  font-weight: 700;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-  position: relative;
-  animation: floatIn 0.3s ease;
-}
-
-.arrow-right {
-  position: absolute;
-  right: -30px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 2rem;
-  color: var(--highlight);
-}
-
+/* Search */
 .global-search-container {
   display: flex;
   justify-content: center;
@@ -256,7 +233,6 @@
 }
 
 
-
 @keyframes floatIn {
   from {
     opacity: 0;
@@ -269,7 +245,7 @@
   }
 }
 
-/* Dark overlay */
+/* Popup */
 .popup-overlay {
   position: fixed;
   inset: 0;
@@ -284,7 +260,7 @@
   z-index: 9999;
 }
 
-/* White card */
+
 .popup-box {
   width: 40%;
   max-width: 300px;
@@ -302,7 +278,6 @@
   animation: popupFade 0.25s ease;
 }
 
-/* Message */
 .popup-box p {
   margin: 0 0 40px;
 
@@ -337,7 +312,6 @@
   margin-bottom: 2rem;
 }
 
-/* OK button */
 .popup-close {
   background: var(--main);
 
@@ -374,6 +348,7 @@
   }
 }
 
+/* Dark mode toggle */
 .theme-toggle {
   width: 72px;
   height: 40px;
