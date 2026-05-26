@@ -3,7 +3,7 @@ from fastapi import HTTPException
 
 from models.database import sets_collection
 
-
+# Fetching all sets for a user
 async def get_all_flashcards(current_user: str):
     try:
         sets_cursor = sets_collection.find(
@@ -14,6 +14,7 @@ async def get_all_flashcards(current_user: str):
 
         result = []
 
+        # An empty list to store formatted sets
         for s in sets:
             result.append({
                 "id": str(s["_id"]),
@@ -27,51 +28,53 @@ async def get_all_flashcards(current_user: str):
     except Exception as e:
         print("Database error:", e)
 
+        # Logs any erroras
         raise HTTPException(
             status_code=500,
             detail="Failed to retrieve flashcard sets"
         )
 
-
+# Creating a new set
 async def create_flashcard_set(data, current_user: str):
     
-    # Validate title
+    # Validates title
     if not data.title.strip():
       raise HTTPException(
           status_code=400,
           detail="Title cannot be empty"
       )
 
-    # Validate description
+    # Validats description
     if not data.description.strip():
       raise HTTPException(
           status_code=400,
           detail="Description cannot be empty"
       )
 
-
-
-    # Validate cards exist
+    # Validates cards exist
     if len(data.terms) == 0:
       raise HTTPException(
           status_code=400,
           detail="A flashcard set must contain at least one card"
       )
 
-    # Validate every card
+    # Validates every card
     for card in data.terms:
-      if not card.term.strip():
-          raise HTTPException(
-              status_code=400,
-              detail="Card term cannot be empty"
-          )
+        # Validates that the term is not empty
+        if not card.term.strip():
+            raise HTTPException(
+                status_code=400,
+                detail="Card term cannot be empty"
+            )
 
-      if not card.definition.strip():
-          raise HTTPException(
-              status_code=400,
-              detail="Card definition cannot be empty"
-          )
+        # Validates that the defintion is not empty
+        if not card.definition.strip():
+            raise HTTPException(
+                status_code=400,
+                detail="Card definition cannot be empty"
+            )
 
+    # Creating a dictionary representing the flashcard set
     try:
         new_set = {
             "owner": current_user,
@@ -91,14 +94,17 @@ async def create_flashcard_set(data, current_user: str):
 
         return {"message": "Flashcard set saved"}
 
+    # Logs the error
     except Exception as e:
         print("Database error:", e)
 
+        # Sends error
         raise HTTPException(
             status_code=500,
             detail="Failed to save flashcard set"
         )
 
+# Deleting a set
 async def delete_flashcard_set(
     set_id: str,
     current_user: str
@@ -117,45 +123,49 @@ async def delete_flashcard_set(
 
         return {"message": "Deleted"}
 
+    
     except HTTPException:
         raise
-
+    
+    # Logs unexpected errors
     except Exception as e:
         print("Database error:", e)
 
+        # Sends error 
         raise HTTPException(
             status_code=500,
             detail="Failed to delete flashcard set"
         )
 
+# Updating an existing set
 async def update_flashcard_set(
     set_id: str,
     data,
     current_user: str
 ):
     
-    # Validate title
+    # Validates title
     if not data.title.strip():
       raise HTTPException(
           status_code=400,
           detail="Title cannot be empty"
       )
 
-    # Validate description
+    # Validates description
     if not data.description.strip():
       raise HTTPException(
           status_code=400,
           detail="Description cannot be empty"
       )
     
-    # Validate cards exist
+    # Validates cards exist
     if len(data.terms) == 0:
       raise HTTPException(
           status_code=400,
           detail="A flashcard set must contain at least one card"
       )
 
-    # Validate every card
+    # Validates every card
     for card in data.terms:
       if not card.term.strip():
           raise HTTPException(
@@ -206,9 +216,11 @@ async def update_flashcard_set(
     except HTTPException:
         raise
 
+    # Logs errors
     except Exception as e:
         print("Database error:", e)
 
+        # Sends error
         raise HTTPException(
             status_code=500,
             detail="Failed to update flashcard set"
