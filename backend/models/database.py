@@ -1,16 +1,16 @@
 import motor.motor_asyncio
 
-# connects to a mongodb instance running locally
+# Connects to a mongodb instance running locally
 client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
 
-#chooses the database - flashcards_db
+# Chooses the database - flashcards_db
 db = client.flashcards_db
 
-#selects the specific "table"
+# Selects the specific "table"
 sets_collection = db.flashcard_sets
 
-#collection for user data
+# Collection for user data
 users_collection = db.users
 
-#selects the learning_history collection
+# Selects the learning_history collection
 history_collection = db.learning_history
